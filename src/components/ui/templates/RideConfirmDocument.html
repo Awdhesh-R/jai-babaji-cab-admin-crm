@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://kit.fontawesome.com/229b339472.js" crossorigin="anonymous"></script>
+    <title>Rodbez</title>
+        <style>
+            i {
+                margin-right: 5px;
+            }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+            }
+            @media print {
+                @page {
+                    margin: 0;
+                }
+                i {
+                    margin-right: 5px;
+                }
+                body {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+                }
+                .custom-page-break {
+                    page-break-after: always;
+                }
+            }
+        </style>
+</head>
+
+<body style="margin: 0;width: 100%;">
+    <div style="background: black;">
+        <div style="display: flex;margin: 0% 50px;">
+            <div style="width: 65%;color: white; margin: auto 0; align-items: center;line-height: 0.8;">
+                <h1 style="font-size: 60px;color: white; text-align: left;margin: 0;">Rod<span style=" color: #FBE203;">B</span>ez</h1>
+                <p class="s2" style="margin: 0;">Revolution is on the way</p>
+            </div>
+            <div style="width: 35%;color: white;margin: 2% 0;">
+                <a style="color: white;text-decoration: none;"
+                href="https://www.google.com/maps/place/RodBez+Patna+HQ/@25.6208821,85.0415416,17z/data=!3m1!4b1!4m14!1m7!3m6!1s0x39ed57bfeddeaa53:0x32c215e407dde75c!2sRodBez+Patna+HQ!8m2!3d25.6208773!4d85.0441165!16s%2Fg%2F11sv57tlmj!3m5!1s0x39ed57bfeddeaa53:0x32c215e407dde75c!8m2!3d25.6208773!4d85.0441165!16s%2Fg%2F11sv57tlmj!5m1!1e4?authuser=0&entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D">
+                    <span>Corporate office: </span><br>
+                    <span>Rajmati complex 4<sup>th</sup> 5<sup>th</sup> 6<sup>th</sup>, Bailey Rd, near skoda showroom, Saguna More, Patna, Bihar 801503</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="background-color: white;">
+        <div style="margin: 0 50px;">
+            <div class="s3" style="text-align: left;display: flex; align-items: center;">
+                <div
+                    style="width: 30px; height: 30px;margin-right: 1%; border-radius: 100%;background-color: green;display: flex;align-items: center; justify-content: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h2 class="h2" style="color: green;">Your Ride Has Been Confirmed</h2>
+            </div>
+            <div>
+                <div style="border: 1px solid #d1d5db; border-radius: 15px 15px 0 0; border-bottom: 2px solid #d1d5db;">
+                    <h2 class="h2" style="font-weight: bold; margin: 3% 0 1% 3%;">Trip Details</h2>
+                    <div style="margin: auto 3%;display: flex;">
+                        <div style="width: 60%;line-height: 2;">
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 40%;"><i class="fa-regular fa-user"></i>Customer Name: </span>
+                                <span style="width: 60%;font-weight: bold;">{{name}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 40%;"><i class="fa-regular fa-calendar-days"></i>Date: </span>
+                                <span style="width: 60%;font-weight: bold;">{{date}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;flex-wrap: wrap;">
+                                <span style="width: 40%;"><i class="fa-solid fa-location-dot" style="color: red;"></i>Pickup Location </span>
+                                <span style="width: 60%;font-weight: bold;">{{src}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;flex-wrap: wrap;">
+                                <span style="width: 40%;"><i class="fa-solid fa-location-dot" style="color: green;"></i>Drop Location: </span>
+                                <span style="width: 60%;font-weight: bold;">{{dest}}</span>
+                            </div>
+                        </div>
+                        <div style="width: 40%;line-height: 2;">
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 50%;">Booking ID: </span>
+                                <span style="width: 50%;font-weight: bold;color: blue;">{{urid}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 50%;"><i class="fa-regular fa-clock"></i>Time: </span>
+                                <span style="width: 50%;font-weight: bold;">{{time}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 50%;"><i class="fa-solid fa-car-side"></i>Vehicly Type: </span>
+                                <span style="width: 50%;font-weight: bold;">{{cab_type}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 50%;"><i class="fa-solid fa-clone"></i>Trip Type: </span>
+                                <span style="width: 50%;font-weight: bold;">{{rideServiceType}}</span>
+                            </div>
+                            <div style="display: flex;align-items: center;">
+                                <span style="width: 50%;"><i class="fa-solid fa-route"></i>Distane: </span>
+                                <span style="width: 50%;font-weight: bold;">{{estimated_km}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="border: 1px solid #d1d5db; border-radius: 0 0 15px 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 1% 3%;display: flex;">
+                        <span><i class="fa-solid fa-map-location-dot"></i>Your confirmed route &nbsp;</span>
+                        <span>{{route_map}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 30px;display: flex;align-items: start;line-height: 2;">
+                        <div style="width: 50%;">
+                            <h4 style="font-weight: bold;margin: 0;"><i class="fa-solid fa-user-group"></i>Passenger Details</h4>
+                            <span>{{adults}} Adults</span><br>
+                            <span>{{child}} Child</span>
+                        </div>
+                        <div style="width: 50%;">
+                            <h4 style="font-weight: bold;margin: 0;"><i class="fa-solid fa-suitcase-rolling"></i>Luggage <span style="font-weight: normal;">(Total bags - {{total_bags}})</span></h4>
+                            <span>{{big_luggage}} Large Suitcase</span><br>
+                            <span>{{adults}} Small Backpack</span>
+                        </div>
+                    </div>
+                    <div style="margin: 30px;line-height: 1.15;">
+                        <p class="s13" style="text-align: left;color: red; margin: 0;"><i class="fa-solid fa-circle-exclamation" style="color: red;"></i>Over-luggage may lead to ride
+                            cancellation.</p>
+                        <p style="text-align: left;color: gray;margin: 0 25px;">If your luggage
+                            exceeds the allowed limit, RodBez or the driver reserves the right to cancel the ride without refund. Please
+                            ensure your bags are within the standard luggage policy.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 0 3%;">
+                        <h2>Estimated Fare</h2>
+                    </div>
+                    <div style="border: 1px solid #d1d5db; border-left: 0; border-right: 0;line-height: 2;">
+                        <div style="margin: 0 3%;">
+                                <div style="display: flex;align-items: center;">
+                                    <span style="width: 60%;">Base Fare: </span>
+                                    <span style="width: 40%;font-weight: bold;">{{base_fare}}</span>
+                                </div>
+                                <div style="display: flex;align-items: center;">
+                                    <span style="width: 60%;">Estimated Travel Time: </span>
+                                    <span style="width: 40%;font-weight: bold;">{{estimated_time}}</span>
+                                </div>
+                                <div style="display: flex;align-items: center;">
+                                    <span style="width: 60%;">Advance Paid: </span>
+                                    <span style="width: 40%;font-weight: bold;">{{advance_amount}}</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div style="background-color: #cec9c9;border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                        <div style="display: flex;margin: 0 3%;">
+                            <h3 style="width: 60%;">Remaining Amount (To Be Paid):</h3>
+                            <h3 style="width: 40%;">{{remaining_amount}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;" class="custom-page-break">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db; background-image: linear-gradient(to right, #fff6a6, white);">
+                    <div style="margin: 0 3%;">
+                        <h3 style="text-align: left;"><i class="fa-solid fa-tag"></i>Driver details will be assigned 2 hours before
+                            your scheduled departure.</h3>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 0 3%;">
+                        <h3 style="color: red;font-weight: bold;">Important Notes</h3>
+                        <ul style="line-height: 2;padding: 0% 1.5%;">
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">₹20/km
+                                for extra kilometers traveled</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">₹100/hour
+                                for extra time</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">Toll
+                                tax &amp; parking charges not included (payable as per actuals)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 0 3%;">
+                        <h3 style="font-weight: bold;">Why Rodbez?</h3>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 50%;line-height: 2;">
+                                <p class="s12" style="margin: 0; text-align: left;"><i class="fa-solid fa-shield"></i>Clean &amp; Safe Cabs</p>
+                                <p class="s12" style="margin: 0; text-align: left;"><i class="fa-regular fa-circle-user"></i>24×7 Customer Support</p>
+                            </div>
+                            <div style="width: 50%;line-height: 2;">
+                                <p class="s12" style="margin: 0; text-align: right;"><i class="fa-regular fa-clock"></i>On-Time Guarantee</p>
+                                <p class="s12" style="margin: 0; text-align: right;"><i class="fa-solid fa-money-bill-1-wave"></i>Transparent Billing</p>
+                            </div>
+                        </div>
+                        <div class="s16" style="text-align: left;"><i class="fa-solid fa-circle-exclamation" style="color: green;"></i><span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 10pt;">100%
+                                On-Time pickup guaranteed, If you miss your flight due to delayed pickup, we refund 100% of ticket price.
+                            </span>
+                            <span style="color: blue;">*conditions applied</span></p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 0 3%;">
+                        <h3 style="font-weight: bold;">About RodBez</h3>
+                        <ul style="line-height: 2;padding: 0% 1.5%;">
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">RodBez is Bihar’s largest tech-enabled mobility platform for One-Way Taxi
+                                and Taxipool services. We help passengers save up to 60% by connecting
+                                them with verified drivers and returning empty cabs.</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">Born during the fuel price surge, RodBez was launched on 10 June 2022 by Mr.
+                                Dilkhush Kumar, aiming to make intercity travel in Bihar more affordable,
+                                organized, and efficient.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <div style="border: 1px solid #d1d5db; border-radius: 15px; border-bottom: 2px solid #d1d5db;">
+                    <div style="margin: 0 3%;">
+                        <h3 style="font-weight: bold;">Cancellation Policy</h3>
+                        <ul style="line-height: 2;padding: 0% 1.5%;">
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">🚕 Before
+                                1 Hour of Scheduled Pickup: No cancellation charge</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">⏰ Within
+                                1 Hour of Pickup: ₹100 cancellation fee may apply</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">❌ After
+                                Driver Arrival / On-Trip: No refund of advance amount</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">💡 In
+                                case of driver no-show or technical error, full refund applicable</span>
+                            </li>
+                            <li>
+                                <span
+                                style=" color: #494646; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">📞 For
+                                urgent cancellations, contact support at +91-9876543210 </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 20px 0; line-height: 2;">
+                <a href="https://rodbez.com/privacy"><span style="color: blue;">Privacy Policy</span></a> <br>
+                <a href="https://rodbez.com/privacy"><span style="color: blue;">Terms &amp; Conditions</span></a>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

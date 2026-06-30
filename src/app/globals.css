@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  /* @apply bg-white text-gray-900 light:bg-white light:text-black; */
+  @apply bg-gray-900 text-white;
+}
+
+html, body, #__next {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
+
+.boxShadow {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.scroll-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.scroll-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.customMarkerClass {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  /* width: 5%;
+  height: 5%; */
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+  /* concentric circles container */
+  .circles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    pointer-events: none;
+    background-color: rgba(246, 168, 35, 1); /* solid inner circle */
+
+    /* two concentric rings using box-shadow */
+    box-shadow:
+      0 0 0 20px rgba(246, 168, 35, 1), /* inner circle */
+      0 0 0 40px rgba(246, 168, 35, 0.38);  /* outer circle */
+
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .circles.hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+.maplibregl-popup-content {
+    background: #fff !important;
+    border-radius: 3px !important;
+    box-shadow: 0 1px 2px #0000001a !important;
+    padding: 0 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    min-width: 275px !important;
+    z-index: 20 !important;
+  }
+
+  .table-container {
+  max-height: 400px; /* Set a fixed height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal scroll if not needed */
+  border: 1px solid #ccc;
+}
+
+.scrollable-table {
+  width: 100%;
+}
+
+.scrollable-table th,
+.scrollable-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.module-row {
+  background-color: #f2f2f2; /* Style for main modules */
+  font-weight: bold;
+}
+
+.submodule-row {
+  padding-left: 20px; /* Add some padding/indentation */
+}
+
+/* Optional: Fix the table header */
+.scrollable-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: #ccc;
+}

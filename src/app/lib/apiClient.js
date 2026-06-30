@@ -1,0 +1,90 @@
+// lib/apiClient.js
+import axios from "axios";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.rodbez.com";
+// const BASE_URL = "https://api.rodbez.com/admin"
+
+export const apiClient = async (
+  method,
+  endpoint,
+  payload = {},
+  header = null,
+  isAdmin = true,
+  isOlaAPI = false
+) => {
+  let token = null;
+  let userId = null;
+
+  // For admin endpoints, authentication is via secure cookies, so we don't need to decode tokens
+  // Only decode tokens for non-admin endpoints that might need userId replacement
+  if (!isAdmin && typeof window !== "undefined") {
+    token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const { user_id } = await jwtDecode(token);
+        userId = user_id || null;
+        if (method.toUpperCase() === "GET") {
+          // Removed console.log for security - endpoint not exposed
+          if (userId && endpoint.includes(":userId")) {
+            endpoint = endpoint.replace(":userId", userId);
+          }
+        }
+      } catch (err) {
+        console.error("Invalid Token:", err.message);
+      }
+    }
+  }
+
+  // For admin endpoints, authentication is handled via secure cookies, no token needed
+  // Add security headers to make API calls harder to intercept
+  const timestamp = Date.now();
+  const nonce =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
+
+  const config = {
+    method,
+    url: `${
+      isOlaAPI ? "" : BASE_URL + (isAdmin ? "/admin" : "/api/v1")
+    }${endpoint}`,
+    //url: `${isOlaAPI ? "" : BASE_URL + "/admin"}${endpoint}`,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Request-ID": nonce, // Unique request ID
+      ...(!isOlaAPI && { "X-Timestamp": timestamp.toString() }),
+      "X-Requested-With": "XMLHttpRequest",
+      ...(header && header),
+    },
+    ...(!isOlaAPI && { withCredentials: true }),
+  };
+
+  if (method.toUpperCase() === "GET") {
+    config.params = payload;
+  } else {
+    config.data = payload;
+  }
+
+  try {
+    const response = await axios(config);
+    return response?.data;
+  } catch (error) {
+    // Removed console.log for security - error details not exposed
+    const status = error?.response?.status;
+    if (
+      typeof window !== "undefined" &&
+      (status === 401 || status === 403) &&
+      endpoint !== "/ride_management/add-admin-booking"
+    ) {
+      localStorage.clear();
+      Cookies.remove("adminAuthToken");
+      window.location.reload();
+    }
+    return {
+      success: false,
+      message: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};

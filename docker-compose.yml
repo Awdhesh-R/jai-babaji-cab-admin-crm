@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  nxtadmin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+        - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+        - NEXT_BASE_URL=${NEXT_BASE_URL}
+        - NEXT_IMG_BASE_URL=${NEXT_IMG_BASE_URL}
+        - NEXT_PUBLIC_MINI=${NEXT_PUBLIC_MINI}
+        - NEXT_PUBLIC_SEDAN=${NEXT_PUBLIC_SEDAN}
+        - NEXT_PUBLIC_SUV=${NEXT_PUBLIC_SUV}
+        - OLA_KEY=${OLA_KEY}
+        - OLA_STYLE_JSON_API=${OLA_STYLE_JSON_API}
+        - NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+    container_name: nxtadmin
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+      - NEXT_BASE_URL=${NEXT_BASE_URL}
+      - NEXT_IMG_BASE_URL=${NEXT_IMG_BASE_URL}
+      - NEXT_PUBLIC_MINI=${NEXT_PUBLIC_MINI}
+      - NEXT_PUBLIC_SEDAN=${NEXT_PUBLIC_SEDAN}
+      - NEXT_PUBLIC_SUV=${NEXT_PUBLIC_SUV}
+      - OLA_KEY=${OLA_KEY}
+      - OLA_STYLE_JSON_API=${OLA_STYLE_JSON_API}
+      - NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+    restart: unless-stopped
