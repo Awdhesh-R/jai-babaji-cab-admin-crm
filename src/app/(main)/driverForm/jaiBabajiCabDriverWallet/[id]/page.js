@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import AllRideTable from "@/components/cards/AllRideTable";
 import { collectCash } from "@/services/rideManagement";
 
-const jaiBabajiCabDriverWalletPage = () => {
+const JaiBabajiCabDriverWalletPage = () => {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState(0);
   const [selectedRides, setSelectedRides] = React.useState(new Set());
@@ -1452,4 +1452,4 @@ const jaiBabajiCabDriverWalletPage = () => {
   );
 };
 
-export default jaiBabajiCabDriverWalletPage;
+export default JaiBabajiCabDriverWalletPage;

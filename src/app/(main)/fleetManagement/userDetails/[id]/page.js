@@ -40,7 +40,7 @@ function RideCard({ ride }) {
   const router = useRouter();
 
   const baseImageUrl =
-    process.env.NEXT_IMG_BASE_URL || "https://api.jaibabajicab.com";
+    process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jaibabajicab.com";
 
   const imageUrl = ride.driver_details_json?.driver_image
     ? `${baseImageUrl}/uploads/driver_docs/${ride.driver_details_json.driver_image}`

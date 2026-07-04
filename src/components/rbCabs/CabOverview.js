@@ -369,7 +369,7 @@ const CabOverview = ({cab_id}) => {
                         <div className="flex gap-8 bg-white rounded-2xl shadow-sm p-4  ">
                             <div className="flex items-center gap-3">
                                 <div className=" w-full">
-                                    <Image src={`${"https://api.jaibabajicab.com/uploads/driver_docs"}/${overview?.driver?.driverImage}`} alt="Driver_image" width={200} height={200} className="object-cover rounded-3xl"/>
+                                    <Image src={overview?.driver?.driverImage ? (overview?.driver?.driverImage.startsWith("http") ? overview.driver.driverImage : `${process.env.NEXT_PUBLIC_API_BASE_URL ? process.env.NEXT_PUBLIC_API_BASE_URL.replace(/\/$/, "") : "https://api.jaibabajicab.com"}/uploads/driver_docs/${overview.driver.driverImage.replace(/^\//, "")}`) : '/images/kumar.jpg'} alt="Driver_image" width={200} height={200} className="object-cover rounded-3xl"/>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4 w-full">

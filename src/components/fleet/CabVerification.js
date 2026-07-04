@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 
-const IMAGE_BASE_URL = "https://api.jaibabajicab.com";
+const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ? process.env.NEXT_PUBLIC_API_BASE_URL.replace(/\/$/, "") : "https://api.jaibabajicab.com";
 
 // const getImageUrl = (path, fallback) => {
 //   if (!path || path.includes("undefined")) return fallback;
