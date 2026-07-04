@@ -54,8 +54,8 @@ export default function PageFour({ onClose }) {
       <div className="relative z-10 w-[390px] p-8 rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-center">
         {/* Logo */}
         <h1 className="text-3xl font-bold mb-6">
-          <span className="text-white">Rod</span>
-          <span className="text-yellow-400">Bez</span>
+          <span className="text-white">jaiBabaji</span>
+          <span className="text-yellow-400">Cab</span>
         </h1>
 
         {/* Success Icon */}

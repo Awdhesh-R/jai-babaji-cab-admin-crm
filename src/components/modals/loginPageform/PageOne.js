@@ -57,9 +57,8 @@ export default function PageOne() {
                     {/* Brand */}
                     <div className="w-full flex justify-center items-center mb-6">
                         <h1 className="text-3xl font-bold">
-                            <span className="text-white">Rod</span>
-                            <span className="text-yellow-400">B</span>
-                            <span className="text-white">ez</span>
+                            <span className="text-white">jaiBabaji</span>
+                            <span className="text-yellow-400">Cab</span>
                         </h1>
                     </div>
 

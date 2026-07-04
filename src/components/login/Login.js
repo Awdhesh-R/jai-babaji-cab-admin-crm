@@ -88,7 +88,7 @@ export default function LoginForm() {
           Join Thousands of Riders & Drivers that<br></br>
         </span>
         <span className="text-white items-center font-bold text-[28px] ">
-          Trust Rod<span className="text-[#FFC403]">B</span>ez.<br></br>
+          Trust jaiBabajiCab.<br></br>
         </span>
         <div className="flex items-center gap-6 text-white mt-2">
           <span className="flex items-center gap-2">
