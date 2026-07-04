@@ -28,7 +28,7 @@ const walletCards = [
     image: "/images/walletPoints.png",
   },
   {
-    label: "Earned from RodBez",
+    label: "Earned from jaiBabajiCab",
     amount: "₹ 6,800",
     subtext: "Total earnings",
     icon: <FaArrowTrendUp />,
@@ -38,7 +38,7 @@ const walletCards = [
     image: "/images/totalEarning.png",
   },
   {
-    label: "Rodbez Commission",
+    label: "jaiBabajiCab Commission",
     amount: "₹ 1,200",
     subtext: "Total Commission",
     icon: <BsCashCoin />,

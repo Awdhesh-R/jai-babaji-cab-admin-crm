@@ -624,11 +624,11 @@ setCheckUpdate(prev => !prev);
                 </span>
                 {rideDetails?.status !== "pending" ? (
                   <div className="flex gap-2 items-center">
-                    <span className="text-purple-600 dark:text-purple-400 text-[12px] text-ellipsis">{`https://payment.rodbez.com/rideDetails?urid=${rideDetails?.urid}`}</span>
+                    <span className="text-purple-600 dark:text-purple-400 text-[12px] text-ellipsis">{`https://payment.jaibabajicab.com/rideDetails?urid=${rideDetails?.urid}`}</span>
                     <FaCopy
                       onClick={async () => {
                         await navigator.clipboard.writeText(
-                          `https://payment.rodbez.com/rideDetails?urid=${rideDetails?.urid}`
+                          `https://payment.jaibabajicab.com/rideDetails?urid=${rideDetails?.urid}`
                         );
                         toast.info("Link copied to clipboard");
                       }}

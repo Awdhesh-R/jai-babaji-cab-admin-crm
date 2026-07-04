@@ -58,7 +58,7 @@ export default function PageThree() {
                                 <FaCarSide className="text-black text-xl" />
                             </div>
                             <div>
-                                <h2 className="text-lg text-white font-bold  font-nunito">Welcome to RodBez</h2>
+                                <h2 className="text-lg text-white font-bold  font-nunito">Welcome to jaiBabajiCab</h2>
                                 <p className="text-gray-400 text-sm">Sign in to your dashboard</p>
                             </div>
                         </div>

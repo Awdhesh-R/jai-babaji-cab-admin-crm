@@ -51,23 +51,23 @@ export default function PageTwo() {
         if (otpValue.length !== 6) return;
 
         try {
-            const response = await apiClient("POST", "/rbac/verify-otp", {
+            const response = await apiClient("POST", "/rbac/login", {
                 mobile_no: mobile,
                 otp: otpValue
             });
 
-            if (response.success && response.message === "Login Successful!") {
+            if (response.success) {
                 const data = response;
                 dispatch(setPage("pageFour"));
                 localStorage.setItem('token', data.data.token);
                 localStorage.setItem('user', JSON.stringify(data.data));
-                // Backend handles secure cookie (adminAuthToken) automatically with path: '/'
-
+                Cookies.set('adminAuthToken', data.data.token, { expires: 7, path: '/' });
+                
                 setTimeout(() => {
                     window.location.href = '/dashboard';
                 }, 2000);
             } else {
-                setModalMessage(data.message || "Invalid OTP. Please try again.");
+                setModalMessage(response.message || "Invalid OTP. Please try again.");
                 setShowModal(true);
             }
         } catch (err) {
@@ -126,7 +126,7 @@ export default function PageTwo() {
                                 <FaCarSide className="text-black text-xl" />
                             </div>
                             <div>
-                                <h2 className="text-lg text-white font-bold  font-nunito">Welcome to RodBez</h2>
+                                <h2 className="text-lg text-white font-bold  font-nunito">Welcome to jaiBabajiCab</h2>
                                 <p className="text-gray-400 text-sm">Sign in to your dashboard</p>
                             </div>
                         </div>

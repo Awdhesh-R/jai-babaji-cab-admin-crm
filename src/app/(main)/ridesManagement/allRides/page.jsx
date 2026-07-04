@@ -48,17 +48,17 @@ const tabs = ['All', 'Pending', 'Searched', 'Processing', 'Confirmed', 'Assigned
 
 
 const endPointMap = {
-  all: "all",
-  searched: "searched",
-  pending: "pending",
-  processing: "processing",
-  confirmed: "confirmed",
-  started: "started",
-  assigned: "assigned",
-  arrived: "arrived",
-  completed: "completed",
-  cancelled: "cancelled",
-  notcollected: "completed",
+  all: "allRide",
+  searched: "allRide",
+  pending: "allRide",
+  processing: "allRide",
+  confirmed: "confirmRide",
+  started: "allRide",
+  assigned: "allRide",
+  arrived: "arrivedRide",
+  completed: "complete",
+  cancelled: "cancelRide",
+  notcollected: "complete",
   connectedRide: "allRide",
 };
 
@@ -166,17 +166,35 @@ const AllRidesPage = () => {
   const fetchRides = useCallback(
     async (pageNo) => {
       try {
-        const apiEndpoint = endPointMap[statusTab];
         const params = {
           serviceType: dateFilter.rideType,
           search: querry,
           startsAt: dateFilter.startDate? encodeURIComponent(moment(dateFilter.startDate).format("YYYY-MM-DD HH:mm:ss.SSS")): null,
           endsAt: dateFilter.endDate? encodeURIComponent(moment(dateFilter.endDate).add(23, "hours").add(59, "minutes").add(59,"seconds").format("YYYY-MM-DD HH:mm:ss.SSS")): null
         }
-        const response = await apiClient("GET", `/ride_management/fetch-rides/${apiEndpoint}/${pageNo}`, params);
+        const apiEndpoint = endPointMap[statusTab] || "allRide";
+        const response = await apiClient("GET", `/ride_management/${apiEndpoint}/${pageNo}`, params);
         let ridesArr = [];
+        let hasMoreData = false;
         if (Array.isArray(response?.data)) {
-          ridesArr = response.data.enrichedRides || [];
+          ridesArr = response.data;
+          if (apiEndpoint === "allRide") {
+            if (statusTab === "pending") {
+              ridesArr = ridesArr.filter(ride => ride.status === "pending");
+            } else if (statusTab === "processing") {
+              ridesArr = ridesArr.filter(ride => ride.status === "processing");
+            } else if (statusTab === "started") {
+              ridesArr = ridesArr.filter(ride => ride.status === "started");
+            } else if (statusTab === "assigned") {
+              ridesArr = ridesArr.filter(ride => ride.status === "assigned");
+            }
+          }
+          if (statusTab === "notcollected") {
+            ridesArr = ridesArr.filter(ride => !ride.is_collected);
+          }
+          const total = (response?.totalRequest || 0) + (response?.totalBooking || 0) + (response?.totalConfirmed || 0) || response?.totalCount || ridesArr.length;
+          setTotalCount(total);
+          hasMoreData = ridesArr.length > 0;
         } else if (response?.data?.enrichedRides && Array.isArray(response.data.enrichedRides)) {
           ridesArr = response.data.enrichedRides;
           if (statusTab === "notcollected") {
@@ -186,16 +204,17 @@ const AllRidesPage = () => {
           }
           setRideServiceTypeData(response?.data?.rideServiceTypeCounts);
           setTotalCount(response?.data?.totalCount);
+          hasMoreData = response.data.enrichedRides.length > 0;
         }
         if (pageNo === 1) {
           setAllRides(ridesArr);
         } else {
-            if (response.data.enrichedRides?.length > 0) {
+          if (hasMoreData) {
             setAllRides((prev) => [...prev, ...ridesArr]);
-            } else {
-              setHasMore(false);
-            }
+          } else {
+            setHasMore(false);
           }
+        }
       } catch (error) {
         console.log("Error fetching rides:", error.message || error);
       }

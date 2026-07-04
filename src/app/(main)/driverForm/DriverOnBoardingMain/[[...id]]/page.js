@@ -68,7 +68,9 @@ const Page = () => {
             setMobile(driver.driverMobile|| "");
             setSameAsMobile(driver.driverMobile == driver.driverWaMobile);
             setAlternateNumer(driver.driverAlternateNumber || "");
-
+            if (driver.driverImage) {
+                setImageUrl(driver.driverImage);
+            }
         }
     }, [driver]);
     const fetchDriver = async (id) => {
@@ -117,10 +119,43 @@ const Page = () => {
     };
 
     const isValidForm = () => {
-        let valid = false;
-        if(address && city && driverName && driverImage && mobile && dlNumber && aadharNo && dlValidDate && (sameAsMobile || whatsapp ))
-            return !valid;
-        return valid;
+        if (!driverImage && !isEdit) {
+            toast.warning("Driver photo is required.");
+            return false;
+        }
+        if (!driverName) {
+            toast.warning("Driver name is required.");
+            return false;
+        }
+        if (!mobile) {
+            toast.warning("Mobile number is required.");
+            return false;
+        }
+        if (!sameAsMobile && !whatsapp) {
+            toast.warning("WhatsApp number is required.");
+            return false;
+        }
+        if (!aadharNo) {
+            toast.warning("Aadhar card number is required.");
+            return false;
+        }
+        if (!dlNumber) {
+            toast.warning("Driving licence number is required.");
+            return false;
+        }
+        if (!dlValidDate) {
+            toast.warning("Licence validity date is required.");
+            return false;
+        }
+        if (!address) {
+            toast.warning("Complete address is required.");
+            return false;
+        }
+        if (!city) {
+            toast.warning("City is required.");
+            return false;
+        }
+        return true;
     }
     const formatFormData = () => {
         const payload = new FormData();
@@ -128,10 +163,16 @@ const Page = () => {
         payload.append("driverName", driverName);
         payload.append("driverCity", city);
         payload.append("driverMobile", mobile);
-        payload.append("driverImage", driverImage);
-
+        if (driverImage) {
+            payload.append("driverImage", driverImage);
+        }
         payload.append("driverAddress", address);
         payload.append("driverWhatsAppNumber", sameAsMobile? mobile : whatsapp);
+        payload.append("aadharNo", aadharNo);
+        payload.append("alternateNumber", alternateNumber);
+        if (id && id[0]) {
+            payload.append("id", id[0]);
+        }
         return payload;
     }
 

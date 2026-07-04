@@ -38,10 +38,10 @@ export default function InvoiceModal({ isOpen, onClose, data }) {
           <div className="flex justify-between items-start mb-6">
             <div>
               <h1 className="text-2xl font-semibold text-blue-500">
-                Rodbez Auto Services
+                jaiBabajiCab Auto Services
               </h1>
               <p className="text-gray-500 text-sm">
-                Bihar, India • support@rodbez.com
+                Bihar, India • support@jaibabajicab.com
               </p>
             </div>
             <div className="text-right">
@@ -99,7 +99,7 @@ export default function InvoiceModal({ isOpen, onClose, data }) {
           <p className="text-center text-gray-500 text-xs leading-snug">
             Thank you for choosing{" "}
             <span className="font-semibold text-slate-700">
-              Rodbez Auto Services
+              jaiBabajiCab Auto Services
             </span>
             . <br />
             This invoice was generated automatically and does not require a

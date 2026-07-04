@@ -128,15 +128,22 @@ export default function Sidebar() {
       );
     }
     const user = localStorage.getItem("user");
-    if (user) {
-      const userData = JSON.parse(user) || JSON.parse(user);
-      console.log("User Data:", userData);
-      if (userData && userData.user) {
-        setUserData(userData.user);
-      } else {
-        console.log("User name not found in the user data.");
+    if (user && user !== "undefined") {
+      try {
+        const userData = JSON.parse(user);
+        // console.log("User Data:", userData);
+        if (userData && (userData.user || userData.name)) {
+          setUserData(userData.user || userData);
+        } else {
+          // console.log("User name not found in the user data.");
+          setUserData(null);
+        }
+      } catch (e) {
+        console.error("Failed to parse user from localStorage", e);
         setUserData(null);
       }
+    } else {
+      setUserData(null);
     }
   }, []);
 
@@ -158,7 +165,7 @@ export default function Sidebar() {
     setActive("");
     dispatch(
       setHeader({
-        title: "RodBez Fleet",
+        title: "jaiBabajiCab Fleet",
         subtitle: "Real-time fleet management and analytics",
       }),
     );

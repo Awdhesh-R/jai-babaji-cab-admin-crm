@@ -23,7 +23,7 @@ export default function PageOne() {
                 if (res.meta.requestStatus === "fulfilled") {
                     const response = res.payload;
 
-                    if (response.message === "Please enter the OTP!") {
+                    if (response.success || response.message === "Please enter the OTP!" || response.message === "OTP sent to your mobile number") {
                         dispatch(setPage("pageTwo")); // move to next page
                     } else {
                         // Show any other success or API message in modal
@@ -71,7 +71,7 @@ export default function PageOne() {
                             </div>
                             <div>
                                 <h2 className="text-lg text-white font-bold font-nunito">
-                                    Welcome to RodBez
+                                    Welcome to jaiBabajiCab
                                 </h2>
                                 <p className="text-gray-400 text-sm">Sign in to your dashboard</p>
                             </div>

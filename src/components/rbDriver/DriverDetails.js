@@ -19,7 +19,7 @@ const DriverDetails = ({id}) => {
   const router = useRouter();
 
   const Ride = () => {
-    router.push(`/driverForm/RodBezDriverWallet/${id}`);
+    router.push(`/driverForm/jaiBabajiCabDriverWallet/${id}`);
   }
 
    const wallet = () => {

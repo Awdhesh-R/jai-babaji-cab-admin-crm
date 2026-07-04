@@ -32,7 +32,7 @@ const page = () => {
                                 Choose Your Driver Package
                             </h2>
                             <p className="text-[10px] text-gray-500">
-                                Please select one of the following driver plans to begin earning with RodBez
+                                Please select one of the following driver plans to begin earning with jaiBabajiCab
                             </p>
                         </div>
 
@@ -151,7 +151,7 @@ const page = () => {
                             </div>
 
                             <div className="flex flex-col bg-red-50 p-2 rounded-lg">
-                                <span className='text-[12px]'>RodBez Hero Incentive</span>
+                                <span className='text-[12px]'>jaiBabajiCab Hero Incentive</span>
                                 {/* <p></p> */}
                                 <span className="text-[#EA580C] text-[13px]">
                                     ₹7,500 Quarterly bonus
@@ -227,7 +227,7 @@ const page = () => {
                             <div className='flex items-center gap-2 bg-gray-100 rounded-md px-2 py-0.5'>
                                 <CheckCircle className='h-3 w-3 text-blue-500 '></CheckCircle>
                                 <span className='text-[12px]'>
-                                    RodBez Hero Incentive = 28 ड्यूटी + 0 Refusal, 50 Rides & 100KM ड्राइविंग पर ₹2500 मिलेगा
+                                    jaiBabajiCab Hero Incentive = 28 ड्यूटी + 0 Refusal, 50 Rides & 100KM ड्राइविंग पर ₹2500 मिलेगा
                                 </span>
                             </div>
 

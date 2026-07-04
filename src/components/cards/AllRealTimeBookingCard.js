@@ -174,7 +174,7 @@ const AllRealTimeBookingCard = ({
         "POST",
         "/ride_management/admin-accept-reject-booking-request",
         {
-          type: cabDetails.source === "RodBez" ? "RodBez" : "Operator",
+          type: cabDetails.source === "jaiBabajiCab" ? "jaiBabajiCab" : "Operator",
           driver_id: cabDetails.driver.id,
           booking_id: selectedRide.id,
           booking_type: "realTime",

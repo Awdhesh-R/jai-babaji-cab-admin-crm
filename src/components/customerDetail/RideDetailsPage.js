@@ -517,7 +517,7 @@ const RideDetailsPage = ({
     const source = cabServiceData?.cabDetails?.cab_source?.toLowerCase();
     try {
       let url = null;
-      if (source === "rodbez") {
+      if (source === "jaibabajicab") {
         url = `/rb_cabs/rbCabsDetails/${cab_id}`;
         const response = await apiClient("GET", url);
         if (response.status || response.success) {
@@ -866,10 +866,10 @@ const canEditFareSummary =
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ml-4 mr-4">
               <div className="p-4 bg-white rounded-md shadow-md border border-gray-200">
                 <p className="text-xs font-semibold text-blue-600 uppercase">
-                  RodBez Fee
+                  jaiBabajiCab Fee
                 </p>
                 <p className="text-xl font-bold text-gray-900">
-                  ₹ {rideDetails?.price_details_json?.rodbez_fee || 0}
+                  ₹ {(rideDetails?.price_details_json?.jaibabajicab_fee || (rideDetails?.price_details_json?.jaibabajicab_fee || rideDetails?.price_details_json?.jaibabajicab_fee)) || 0}
                 </p>
                 <p className="text-sm text-gray-500">Service Charge</p>
               </div>

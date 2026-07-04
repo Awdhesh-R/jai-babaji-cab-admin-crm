@@ -5,7 +5,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import ClusterSearchCity from '@/components/cluster/clusterSearchCity/ClusterSearchCity';
 import CityDetails from '@/components/cluster/CityDetails';
 import PatnaRentar from '@/components/cluster/renterCity/PatnaRentar';
-// import CabOverview from '@/components/rodbezCabs/CabOverview';
+// import CabOverview from '@/components/jaibabajicabCabs/CabOverview';
 import CabDriverPage from '../../cabManagement/cabDriver/page';
 import { apiClient } from '@/app/lib/apiClient';
 import { useDispatch, useSelector } from 'react-redux';

@@ -33,7 +33,7 @@ export default function FuelRequestLogs() {
 
   const now = new Date();
   const baseImageUrl =
-    process.env.NEXT_IMG_BASE_URL || "https://api.rodbez.com";
+    process.env.NEXT_IMG_BASE_URL || "https://api.jaibabajicab.com";
 
   const fetchFuelHistoryList = useCallback(
     async (pageNo) => {

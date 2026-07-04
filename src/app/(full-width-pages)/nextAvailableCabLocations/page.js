@@ -142,7 +142,7 @@ const NextAvailableCabLocationsMap = () => {
                         <a href='${
                           tab === "operator"
                             ? `fleetManagement/cabDetailsVerification?id=${cab.id}`
-                            : `/driverForm/RodBezDriverWallet/${
+                            : `/driverForm/jaiBabajiCabDriverWallet/${
                                 driver.id || cab.driver_id
                               }`
                         }' target="_blank">View more Details...</a>

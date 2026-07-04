@@ -186,7 +186,7 @@ setShowStep4(
     if(category === "Operator") {
       window.open(`fleetManagement/cabDetailsVerification?id=${cab.id}`,"_blank");
     } else { 
-      window.open(`/driverForm/RodBezDriverWallet/${cab.driver_id || cab["driver.id"]}`, "_blank");
+      window.open(`/driverForm/jaiBabajiCabDriverWallet/${cab.driver_id || cab["driver.id"]}`, "_blank");
     }
   }
 

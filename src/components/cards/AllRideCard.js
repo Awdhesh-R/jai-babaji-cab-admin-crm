@@ -372,7 +372,7 @@ const message = `
 *Contact number*
 *9297924243*
 
-https://www.rodbez.com
+https://www.jaibabajicab.com
 
 *Pickup & Drop Location :👇*
  ${mapUrl}

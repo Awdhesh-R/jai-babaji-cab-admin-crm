@@ -213,15 +213,15 @@ const InfoUser = ({
   if (!rideDetails?.urid) return "-";
 
   // if (rideDetails?.payment_method === "") {
-  //   return  `https://payment.rodbez.com/rideDetails?urid=${rideDetails?.urid}`;
+  //   return  `https://payment.jaibabajicab.com/rideDetails?urid=${rideDetails?.urid}`;
   // }
   if (rideDetails?.payment_method !== "cashfree") {
-  return `https://payment.rodbez.com/rideDetails?urid=${rideDetails?.urid}`;
+  return `https://payment.jaibabajicab.com/rideDetails?urid=${rideDetails?.urid}`;
 }
 
   if (rideDetails?.payment_method === "cashfree") {
-    return `https://www.rodbez.com/oldpay?urid=${rideDetails?.urid}`;
-    // return `http://local-website.rodbez.tech/oldpay?urid=${rideDetails?.urid}`;
+    return `https://www.jaibabajicab.com/oldpay?urid=${rideDetails?.urid}`;
+    // return `http://local-website.jaibabajicab.tech/oldpay?urid=${rideDetails?.urid}`;
   }
   return "-";
 };
@@ -648,13 +648,13 @@ const InfoUser = ({
                 {rideDetails?.status !== "pending" ? (
                   <div className="flex gap-2 items-center">
                     <span className="text-purple-600 dark:text-purple-400 text-[12px] text-ellipsis">
-                      {/* {`https://payment.rodbez.com/rideDetails?urid=${rideDetails?.urid}`} */}
+                      {/* {`https://payment.jaibabajicab.com/rideDetails?urid=${rideDetails?.urid}`} */}
                          {getPaymentUrl()}
                       </span>
                     <FaCopy
                       onClick={async () => {
                         // await navigator.clipboard.writeText(
-                        //   `https://payment.rodbez.com/rideDetails?urid=${rideDetails?.urid}`
+                        //   `https://payment.jaibabajicab.com/rideDetails?urid=${rideDetails?.urid}`
                         // );
                         await navigator.clipboard.writeText(getPaymentUrl());
                         toast.info("Link copied to clipboard");

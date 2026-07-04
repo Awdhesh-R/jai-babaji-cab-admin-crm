@@ -329,7 +329,7 @@ const [paymentMethod, setPaymentMethod] = useState("");
     //         setSuggestions([]);
     //         const place = { placeName: input.trim() };
     //         try {
-    //             const response = await fetch('https://api.rodbez.com/api/v1/place/search-place', {
+    //             const response = await fetch('https://api.jaibabajicab.com/api/v1/place/search-place', {
     //                 method: 'POST',
     //                 headers: { 'Content-Type': 'application/json' },
     //                 body: JSON.stringify(place),

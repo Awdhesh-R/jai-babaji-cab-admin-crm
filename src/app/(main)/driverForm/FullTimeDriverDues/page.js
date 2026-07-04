@@ -32,7 +32,7 @@ export default function PaymentHistory() {
   const [searchInput, setSearchInput] = useState("");
   const [show, setShow] = useState(false);
   const [nameSearch, setNameSearch] = useState("");
-  const [RodbezDrivers, setRodbezDrivers] = useState([]);
+  const [jaiBabajiCabDrivers, setjaiBabajiCabDrivers] = useState([]);
   const [openPopupIndex, setOpenPopupIndex] = useState(null);
 
   const [filter, setFilter] = useState({
@@ -286,16 +286,16 @@ export default function PaymentHistory() {
     }
   };
 
-  // Fetch Rodbez drivers
-  const fetchRodbezDrivers = useCallback(async () => {
+  // Fetch jaiBabajiCab drivers
+  const fetchjaiBabajiCabDrivers = useCallback(async () => {
     setLoading(true);
     try {
       const response = await apiClient("GET", "/rb_drivers/getAllDriver", {});
       if (response.status || response.success) {
-        setRodbezDrivers(response.data.data || response.data || []);
+        setjaiBabajiCabDrivers(response.data.data || response.data || []);
       }
     } catch (error) {
-      console.error("Error fetching Rodbez drivers:", error);
+      console.error("Error fetching jaiBabajiCab drivers:", error);
     } finally {
       setLoading(false);
     }
@@ -304,20 +304,20 @@ export default function PaymentHistory() {
   // When show popup is true, fetch both drivers
   useEffect(() => {
     if (show) {
-      fetchRodbezDrivers();
+      fetchjaiBabajiCabDrivers();
     }
-  }, [show, fetchRodbezDrivers]);
+  }, [show, fetchjaiBabajiCabDrivers]);
 
-  // Map Rodbez drivers to uniform format
-  const mappedRodbez = RodbezDrivers.map((d) => ({
+  // Map jaiBabajiCab drivers to uniform format
+  const mappedjaiBabajiCab = jaiBabajiCabDrivers.map((d) => ({
     driverId: d.id,
     driverName: d.driverName,
     driverMobile: d.driverMobile || "N/A",
-    fleetType: "Rodbez",
+    fleetType: "jaiBabajiCab",
   }));
 
   // Combine based on fleet filter
-  const combinedDrivers = mappedRodbez;
+  const combinedDrivers = mappedjaiBabajiCab;
 
   // Filter combined drivers by search fields
   const displayData = combinedDrivers.filter(
@@ -610,7 +610,7 @@ export default function PaymentHistory() {
                       <td
                         onClick={() =>
                           router.push(
-                            `/driverForm/RodBezDriverWallet/${t.driver_id}`,
+                            `/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`,
                           )
                         }
                         className="text-left font-semibold text-sm cursor-pointer hover:text-blue-600 hover:underline transition duration-200"
@@ -852,7 +852,7 @@ export default function PaymentHistory() {
                     <span
                       onClick={() =>
                         router.push(
-                          `/driverForm/RodBezDriverWallet/${t.driver_id}`,
+                          `/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`,
                         )
                       }
                       className="text-right cursor-pointer hover:text-blue-600 hover:underline transition duration-200"

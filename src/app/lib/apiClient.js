@@ -4,8 +4,8 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.rodbez.com";
-// const BASE_URL = "https://api.rodbez.com/admin"
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jaibabajicab.com";
+// const BASE_URL = "https://api.jaibabajicab.com/admin"
 
 export const apiClient = async (
   method,
@@ -18,11 +18,9 @@ export const apiClient = async (
   let token = null;
   let userId = null;
 
-  // For admin endpoints, authentication is via secure cookies, so we don't need to decode tokens
-  // Only decode tokens for non-admin endpoints that might need userId replacement
-  if (!isAdmin && typeof window !== "undefined") {
+  if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
-    if (token) {
+    if (token && !isAdmin) {
       try {
         const { user_id } = await jwtDecode(token);
         userId = user_id || null;
@@ -38,7 +36,6 @@ export const apiClient = async (
     }
   }
 
-  // For admin endpoints, authentication is handled via secure cookies, no token needed
   // Add security headers to make API calls harder to intercept
   const timestamp = Date.now();
   const nonce =
@@ -48,7 +45,7 @@ export const apiClient = async (
   const config = {
     method,
     url: `${
-      isOlaAPI ? "" : BASE_URL + (isAdmin ? "/admin" : "/api/v1")
+      isOlaAPI ? "" : BASE_URL.replace(/\/$/, "") + (isAdmin ? "/admin" : "/api/v1")
     }${endpoint}`,
     //url: `${isOlaAPI ? "" : BASE_URL + "/admin"}${endpoint}`,
     headers: {
@@ -56,6 +53,7 @@ export const apiClient = async (
       "X-Request-ID": nonce, // Unique request ID
       ...(!isOlaAPI && { "X-Timestamp": timestamp.toString() }),
       "X-Requested-With": "XMLHttpRequest",
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...(header && header),
     },
     ...(!isOlaAPI && { withCredentials: true }),

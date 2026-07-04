@@ -46,7 +46,7 @@ export const sendOtp = createAsyncThunk(
       //  speed: position.coords.speed
      };
 
-      const res = await apiClient("POST", "/rbac/send-otp-Ffii0ZUonbPrHJb9Xztn82qP", { mobile_no, ...coords });
+      const res = await apiClient("POST", "/rbac/login", { mobile_no, ...coords });
 
       // Handle API response for registered/unregistered numbers
       if (res.statusCode === 200 && res.message === "Please Enter Register Mobile No") {

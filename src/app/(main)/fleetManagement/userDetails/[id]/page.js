@@ -40,7 +40,7 @@ function RideCard({ ride }) {
   const router = useRouter();
 
   const baseImageUrl =
-    process.env.NEXT_IMG_BASE_URL || "https://api.rodbez.com";
+    process.env.NEXT_IMG_BASE_URL || "https://api.jaibabajicab.com";
 
   const imageUrl = ride.driver_details_json?.driver_image
     ? `${baseImageUrl}/uploads/driver_docs/${ride.driver_details_json.driver_image}`
@@ -788,7 +788,7 @@ export default function DashboardPage() {
     //         <div className="flex flex-col h-full">
     //           {/* <div className="flex items-center gap-2">
     //       <div  /> <FaArrowTrendUp className="bg-[#C5FBD8] text-[#2FAE5E] p-2 rounded-md"/>
-    //       <span className="text-sm font-medium text-white">Earned from RodBez</span>
+    //       <span className="text-sm font-medium text-white">Earned from jaiBabajiCab</span>
     //     </div> */}
     //           <div className="flex items-center gap-2">
     //             <FaArrowTrendUp className="bg-[#C5FBD8] text-[#2FAE5E] p-4 rounded-md text-6xl" />
@@ -815,7 +815,7 @@ export default function DashboardPage() {
     //         <div className="flex flex-col h-full">
     //           {/* <div className="flex items-center gap-2">
     //       <BsWallet className="bg-[#FFC667] text-white p-5 rounded-md" />
-    //       <span className="text-sm font-medium text-black">Rodbez collections</span>
+    //       <span className="text-sm font-medium text-black">jaiBabajiCab collections</span>
     //     </div> */}
     //           <div className="flex items-center gap-2">
     //             <BsWallet className="bg-[#FFC667] text-white p-3 rounded-md text-5xl" />

@@ -9,9 +9,9 @@ import CustomRentalModal from "../modals/CustomRentalModal";
 import { apiClient } from "@/app/lib/apiClient";
 import Image from "next/image";
 import { toast } from "react-toastify";
-const miniCab = process.env.NEXT_PUBLIC_MINI || "https://api.rodbez.com/uploads/cabs/mini-cab.png";
-const sedanCab = process.env.NEXT_PUBLIC_SEDAN || "https://api.rodbez.com/uploads/cabs/sedan-cab.png";
-const suvCab = process.env.NEXT_PUBLIC_SUV || "https://api.rodbez.com/uploads/cabs/suv-cab.png";
+const miniCab = process.env.NEXT_PUBLIC_MINI || "https://api.jaibabajicab.com/uploads/cabs/mini-cab.png";
+const sedanCab = process.env.NEXT_PUBLIC_SEDAN || "https://api.jaibabajicab.com/uploads/cabs/sedan-cab.png";
+const suvCab = process.env.NEXT_PUBLIC_SUV || "https://api.jaibabajicab.com/uploads/cabs/suv-cab.png";
 
 const RideRental = ({ rideDetails, setCheckUpdate }) => {
     const [selected, setSelected] = useState('');

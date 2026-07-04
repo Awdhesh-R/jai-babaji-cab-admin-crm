@@ -422,12 +422,12 @@ const CabServiceDetails = ({
     confirmed: handleAssignCab,
     assigned: handleArrivedCab,
     arrived: () =>
-      // CabData?.cab_source === "RodBez"
+      // CabData?.cab_source === "jaiBabajiCab"
       //   ? handleStartTrip()
       //   : 
         setStartTripPopUp(true),
     started: () =>
-      // CabData?.cab_source === "RodBez"
+      // CabData?.cab_source === "jaiBabajiCab"
       //   ? handleEndTrip()
       //   : 
         setEndTripPopUp(true),

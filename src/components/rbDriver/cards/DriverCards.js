@@ -27,7 +27,7 @@ useEffect(()=>{
                             <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-3">
                                     <Image
-                                        src={drv.driverImage? `${"https://api.rodbez.com"}/${drv.driverImage}`:'/images/kumar.jpg'}
+                                        src={drv.driverImage? `${"https://api.jaibabajicab.com"}/${drv.driverImage}`:'/images/kumar.jpg'}
                                         alt='driver images'
                                         width={50}
                                         height={50}

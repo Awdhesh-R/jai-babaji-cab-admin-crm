@@ -45,7 +45,7 @@ const transactions = [
     amount: "₹150",
     mode: "Online",
     through: "User",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     user: "Ravi Patel (+91-9988776655)",
     driver: "Sunil Sharma (DRV-103)",
     admin: "Admin Panel",
@@ -117,7 +117,7 @@ const transactions = [
     amount: "₹560",
     mode: "Online",
     through: "User",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     user: "Nikhil Jain (+91-9871203456)",
     driver: "Arun Chauhan (DRV-109)",
     admin: "Admin Panel",
@@ -218,7 +218,7 @@ const invoiceData = [
   {
     id: "INV-003",
     ride_id: "RID-003",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     hsn: "998314",
     amount: "₹25",
     sgst: "₹2.25",
@@ -309,7 +309,7 @@ const invoiceData = [
   {
     id: "INV-010",
     ride_id: "RID-010",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     hsn: "998314",
     amount: "₹35",
     sgst: "₹3.15",
@@ -387,7 +387,7 @@ const invoiceData = [
   {
     id: "INV-016",
     ride_id: "RID-016",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     hsn: "998314",
     amount: "₹40",
     sgst: "₹3.6",
@@ -465,7 +465,7 @@ const invoiceData = [
   {
     id: "INV-022",
     ride_id: "RID-022",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     hsn: "998314",
     amount: "₹28",
     sgst: "₹2.52",
@@ -569,7 +569,7 @@ const invoiceData = [
   {
     id: "INV-030",
     ride_id: "RID-030",
-    type: "RodBez Fee",
+    type: "jaiBabajiCab Fee",
     hsn: "998314",
     amount: "₹32",
     sgst: "₹2.88",
@@ -721,7 +721,7 @@ function getCollectionTypeClasses(type) {
       return "border-[#15803D33] text-[#15803D]";
     case "user advance":
       return "border-[#84CC1633] text-[#84CC16]";
-    // case "rodbez fee":
+    // case "jaibabajicab fee":
     //   return "border-blue-400 text-blue-600";
     // case "driver due":
     //   return "border-orange-400 text-orange-600";
@@ -1182,7 +1182,7 @@ const summaryData = data ?[
                                 className="border-b last:border-0 cursor-pointer hover:bg-gray-200 transition"
                                 onClick={() =>
                                   router.push(
-                                    "/driverForm/RodBezDriverWallet/1"
+                                    "/driverForm/jaiBabajiCabDriverWallet/1"
                                   )
                                 }
                               >

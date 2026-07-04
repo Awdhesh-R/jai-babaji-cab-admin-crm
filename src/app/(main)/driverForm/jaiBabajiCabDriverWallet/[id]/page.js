@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import AllRideTable from "@/components/cards/AllRideTable";
 import { collectCash } from "@/services/rideManagement";
 
-const RodBezDriverWalletPage = () => {
+const jaiBabajiCabDriverWalletPage = () => {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState(0);
   const [selectedRides, setSelectedRides] = React.useState(new Set());
@@ -42,7 +42,7 @@ const RodBezDriverWalletPage = () => {
   const [ridePage, CurrentRidePage] = useState(1);
   const [modalFor, setModalFor] = useState("single"); // 'all' or 'single'
   const [driverDetails, setDriverDetails] = useState();
-  const [rodbezCollectionAmount, setRodbezCollectionAmount] = useState(0);
+  const [jaibabajicabCollectionAmount, setjaiBabajiCabCollectionAmount] = useState(0);
   const [earnedAmount, setEarnedAmount] = useState(0);
   const [walletPoints, setWalletPoints] = useState(0);
   const [totalRides, setTotalRide] = useState();
@@ -63,8 +63,8 @@ const RodBezDriverWalletPage = () => {
   };
   const walletCards = [
     {
-      label: "Rodbez colletions",
-      amount: () => getAmount(rodbezCollectionAmount),
+      label: "jaiBabajiCab colletions",
+      amount: () => getAmount(jaibabajicabCollectionAmount),
       subtext: "Total Collections",
       icon: <BsWallet className="w-5 h-5" />,
       bgColor: "bg-[#FFC667]",
@@ -73,7 +73,7 @@ const RodBezDriverWalletPage = () => {
       image: "/images/walletPoints.png",
     },
     {
-      label: "Earned from RodBez",
+      label: "Earned from jaiBabajiCab",
       amount: () => getAmount(earnedAmount),
       subtext: "Total Earnings",
       icon: <FaArrowTrendUp className="w-5 h-5" />,
@@ -141,9 +141,9 @@ const RodBezDriverWalletPage = () => {
         );
         let tempArr = [];
         if (response.status && response?.data) {
-          setRodbezCollectionAmount(response?.data?.rodbez_collection);
+          setjaiBabajiCabCollectionAmount(response?.data?.jaibabajicab_collection);
           setWalletPoints(response?.data?.wallet_points);
-          setEarnedAmount(response?.data?.earned_from_rodbez);
+          setEarnedAmount(response?.data?.earned_from_jaibabajicab);
           setTotalRide(response?.data?.total_collections_rides);
           setDriverDetails({
             ...response?.data?.driver_details,
@@ -378,7 +378,7 @@ const RodBezDriverWalletPage = () => {
       try {
         const params = {
           page: pageNo,
-          cab_source: "Rodbez",
+          cab_source: "jaiBabajiCab",
           driver_id: id,
           limit: 100,
         };
@@ -553,7 +553,7 @@ const RodBezDriverWalletPage = () => {
       const user = JSON.parse(localStorage.getItem("user"))?.user;
       const response = await apiClient(
         "POST",
-        "/rbac/send-otp-Ffii0ZUonbPrHJb9Xztn82qP",
+        "/rbac/login",
         {
           mobile_no: `${user?.mobile_no}`, //otp to admin mobile
         }
@@ -572,7 +572,7 @@ const RodBezDriverWalletPage = () => {
   const verifyOtp = async (otp, invoiceType) => {
     try {
       const user = JSON.parse(localStorage.getItem("user"))?.user;
-      const response = await apiClient("POST", "/rbac/verify-otp", {
+      const response = await apiClient("POST", "/rbac/login", {
         mobile_no: user?.mobile_no,
         otp: otp,
       });
@@ -714,11 +714,11 @@ const RodBezDriverWalletPage = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-[10px] md:text-[18px] bg-gradient-to-r from-[#2563EB] to-[#9333EA] bg-clip-text text-transparent">
-              RodBez Driver Wallet
+              jaiBabajiCab Driver Wallet
             </span>
             <span className="text-[6px] md:text-[9px] text-gray-500 ">
               Please select one of the following driver plans to begin earning
-              with RodBez
+              with jaiBabajiCab
             </span>
           </div>
         </div>
@@ -727,7 +727,7 @@ const RodBezDriverWalletPage = () => {
       {/* new change hererrereer */}
       <div
         className="rounded-lg border p-5 bg-cover"
-        style={{ backgroundImage: "url('/images/RodBezDriverWallet1.png')" }}
+        style={{ backgroundImage: "url('/images/jaiBabajiCabDriverWallet1.png')" }}
       >
         <span className="text-gray-700 text-[16px] font-bold">
           Wallet Overview
@@ -823,7 +823,7 @@ const RodBezDriverWalletPage = () => {
                     </p>
                   </div>
                 </div>
-                {card?.label === "Rodbez Commission" && (
+                {card?.label === "jaiBabajiCab Commission" && (
                   <div className="my-4 sm:my-0">
                     <Image
                       src="/images/money.svg"
@@ -1452,4 +1452,4 @@ const RodBezDriverWalletPage = () => {
   );
 };
 
-export default RodBezDriverWalletPage;
+export default jaiBabajiCabDriverWalletPage;

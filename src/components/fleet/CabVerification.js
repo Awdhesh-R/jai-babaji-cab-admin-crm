@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 
-const IMAGE_BASE_URL = "https://api.rodbez.com";
+const IMAGE_BASE_URL = "https://api.jaibabajicab.com";
 
 // const getImageUrl = (path, fallback) => {
 //   if (!path || path.includes("undefined")) return fallback;
@@ -100,7 +100,7 @@ const DOC_IMAGE_MAP = {
   Permit: "permit",
 };
 
-// const IMAGE_BASE_URL = "https://api.rodbez.com";
+// const IMAGE_BASE_URL = "https://api.jaibabajicab.com";
 
 const CabVerification = ({ id }) => {
   const [blockModal, setBlockModal] = useState(false);
@@ -260,7 +260,7 @@ const isDocsValid = Object.keys(driverDocs).length === 5;
 
     const fullUrl = imgUrl.startsWith("http")
       ? imgUrl
-      : `https://api.rodbez.com${imgUrl}`;
+      : `https://api.jaibabajicab.com${imgUrl}`;
 
     setPreviewImg(fullUrl);
     setImgOpen(true);
