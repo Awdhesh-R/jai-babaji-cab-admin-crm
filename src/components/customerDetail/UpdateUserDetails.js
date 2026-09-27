@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { apiClient } from '@/app/lib/apiClient';
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa";
 import Image from 'next/image';
@@ -20,6 +21,27 @@ const UpdateUserDetails = ({ rideDetails, actData, genTemplates, canTemplates, c
     });
   }
 }, [rideDetails]);
+
+  const [cityMap, setCityMap] = useState({});
+
+  useEffect(() => {
+      const fetchCities = async () => {
+          try {
+              const response = await apiClient('GET', '/city/getCityList');
+              if (response?.success || response?.status) {
+                  const map = {};
+                  response.data.forEach(city => {
+                      map[city.id] = city.city_name;
+                  });
+                  setCityMap(map);
+              }
+          } catch (error) {
+              console.error("Error fetching cities", error);
+          }
+      };
+      fetchCities();
+  }, []);
+
 
   const handleCitySelect = (selectedCity) => {
     setLocation((prev) => ({
@@ -52,7 +74,7 @@ const UpdateUserDetails = ({ rideDetails, actData, genTemplates, canTemplates, c
                     setIsCityModalOpen(true);
                   }}
                 >
-                  {location?.source}
+                  {location?.source || (rideDetails?.near_ct_id && cityMap[rideDetails.near_ct_id] ? cityMap[rideDetails.near_ct_id] : (rideDetails?.location_details?.source || 'Source'))}
                 </button>
               </div>
 
@@ -66,7 +88,7 @@ const UpdateUserDetails = ({ rideDetails, actData, genTemplates, canTemplates, c
                     setIsCityModalOpen(true);
                   }}
                 >
-                  {location?.destination}
+                  {location?.destination || (rideDetails?.near_ctd_id && cityMap[rideDetails.near_ctd_id] ? cityMap[rideDetails.near_ctd_id] : (rideDetails?.location_details?.destination || 'Destination'))}
                 </button>
               </div>
               <div className="h-[4px] w-[5%] bg-gray-200 dark:bg-gray-600"></div>

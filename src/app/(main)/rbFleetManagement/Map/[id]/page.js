@@ -166,7 +166,7 @@ export default function CabDashboardMap() {
                         <a href='${
                           source === "Operator"
                             ? `fleetManagement/cabDetailsVerification?id=${cab.id}`
-                            : `/driverForm/jaiBabajiCabDriverWallet/${
+                            : `/driverForm/rodYaanDriverWallet/${
                                 cab.driver_id || cab["driver.id"]
                               }`
                         }' target="_blank">View more Details...</a>
@@ -328,7 +328,7 @@ export default function CabDashboardMap() {
         const { OlaMaps } = module;
         olaMapsRef.current = new OlaMaps({
           apiKey: [
-            process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
+            process.env.OLA_KEY || "YM0VARVFQ9OS7T3ANBHY",
           ],
           style:
             "https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard/style.json",
@@ -398,7 +398,7 @@ export default function CabDashboardMap() {
             <div className="absolute flex flex-col justify-end gap-4 top-[20px] right-[15px] z-20">
               <div className="flex items-center gap-4 text-lg">
                 <span className="text-black font-medium ml-1 capitalize">
-                  {source == "ownCabs" ? "jaiBabajiCab" : "Market"} Cabs
+                  {source == "ownCabs" ? "rodYaan" : "Market"} Cabs
                 </span>
                 <span className="text-blue-600 font-medium ml-1 capitalize">
                   {cabList?.[0]?.cab_name} within {distance} Km

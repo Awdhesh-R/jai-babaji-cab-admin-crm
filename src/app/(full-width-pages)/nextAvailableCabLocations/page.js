@@ -18,7 +18,7 @@ const NextAvailableCabLocationsMap = () => {
     leave: "leave",
   };
   const tabOptions = [
-    { label: "Next Available RB Cabs", value: "nextAvailable" },
+    { label: "Next Available jaiBabaji Cabs", value: "nextAvailable" },
   ];
   const [tab, setTab] = useState("nextAvailable");
   // const [cabLocations, setCabLocations] = useState([]);
@@ -142,7 +142,7 @@ const NextAvailableCabLocationsMap = () => {
                         <a href='${
                           tab === "operator"
                             ? `fleetManagement/cabDetailsVerification?id=${cab.id}`
-                            : `/driverForm/jaiBabajiCabDriverWallet/${
+                            : `/driverForm/rodYaanDriverWallet/${
                                 driver.id || cab.driver_id
                               }`
                         }' target="_blank">View more Details...</a>
@@ -331,7 +331,7 @@ const NextAvailableCabLocationsMap = () => {
         const { OlaMaps } = module;
         olaMapsRef.current = new OlaMaps({
           apiKey: [
-            process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
+            process.env.OLA_KEY || "YM0VARVFQ9OS7T3ANBHY",
           ],
           style:
             "https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard/style.json",
@@ -381,11 +381,10 @@ const NextAvailableCabLocationsMap = () => {
           <button onClick={handleClick} className="px-3">
             <div className="flex gap-2">
               <div>
-                <span className="font-bold text-black  text-2xl">Rod</span>
+                <span className="font-bold text-black  text-2xl">rod</span>
                 <span className="text-2xl font-bold bg-gradient-to-br from-[#FFC403] to-[#e96303] bg-clip-text text-transparent">
-                  B
-                </span>
-                <span className="font-bold text-black  text-2xl">ez</span>
+                      Yaan
+                    </span>
               </div>
             </div>
           </button>

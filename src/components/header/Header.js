@@ -24,7 +24,7 @@ export default function Header() {
     >
       <div className='flex flex-col flex-1 '>
         <h2 className=" text-[12px] md:text-2xl font-bold bg-gradient-to-br from-[#FFC403] to-[#F97316] bg-clip-text text-transparent">
-          {headerData?.title || 'jaiBabajiCab Fleet'}
+          {headerData?.title || 'rodYaan Fleet'}
         </h2>
         <p className="text-[8px] md:text-sm text-gray-600">
           {headerData?.subtitle || 'Real-time fleet management and analytics'}

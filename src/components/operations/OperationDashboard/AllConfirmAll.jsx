@@ -6,7 +6,7 @@ import moment from "moment";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaList, FaTh } from "react-icons/fa";
 
-const AlljaiBabajiCabRide = ({ type = "confirm_all", isChild = false }) => {
+const AllrodYaanRide = ({ type = "confirm_all", isChild = false }) => {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -94,7 +94,7 @@ const AlljaiBabajiCabRide = ({ type = "confirm_all", isChild = false }) => {
                 <div className="flex items-center">
                     <div className="w-1 h-6 rounded-md bg-green-700 mr-3"></div>
                     <h2 className="text-[16px] md:text-2xl font-bold bg-gradient-to-r from-[#15803D] to-[#81CA18] bg-clip-text text-transparent">
-                        jaiBabajiCab Ride List
+                        rodYaan Ride List
                     </h2>
                 </div>
 
@@ -137,4 +137,4 @@ const AlljaiBabajiCabRide = ({ type = "confirm_all", isChild = false }) => {
     );
 };
 
-export default AlljaiBabajiCabRide;
+export default AllrodYaanRide;

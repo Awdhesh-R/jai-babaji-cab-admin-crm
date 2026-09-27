@@ -186,14 +186,14 @@ setShowStep4(
     if(category === "Operator") {
       window.open(`fleetManagement/cabDetailsVerification?id=${cab.id}`,"_blank");
     } else { 
-      window.open(`/driverForm/jaiBabajiCabDriverWallet/${cab.driver_id || cab["driver.id"]}`, "_blank");
+      window.open(`/driverForm/rodYaanDriverWallet/${cab.driver_id || cab["driver.id"]}`, "_blank");
     }
   }
 
 const handleProbableCab = async (cab) => {
   const payload = {
     drv_name:
-      cab?.cab_driver_details?.driverName ,
+      cab?.cab_driver_details?.driverName || cab?.driver_name || cab?.driverName || "",
 
     cab_reg: cab?.cab_reg || "",
     cab_id: String(cab?.id || ""),
@@ -201,19 +201,19 @@ const handleProbableCab = async (cab) => {
 
     driver_id: String(cab?.driver_id || ""),
     driver_mobile:
-      cab?.cab_driver_details?.driverMobile,
+      cab?.cab_driver_details?.driverMobile || cab?.driver_mobile || cab?.driverMobile || "",
     drv_wa_number:
-      cab?.cab_driver_details?.driverMobile,
+      cab?.cab_driver_details?.driverMobile || cab?.driver_mobile || cab?.driverMobile || cab?.drv_wa_number || "",
 
-    driver_image: "",
+    driver_image: cab?.driver_image || cab?.driverImage || "",
     cab_model: cab?.cab_model || "",
-    cab_source: cab?.latestBooking?.cab_details_json?.cab_source ,
-    cab_type: cab?.cab_name?.toLowerCase() || "",
+    cab_source: cab?.cab_source || cab?.latestBooking?.cab_details_json?.cab_source || "RY",
+    cab_type: cab?.cab_name?.toLowerCase() || cab?.cab_type || "",
     fleet_rate_per_km:
-  cab?.latestBooking?.fleet_rate_per_km ?? "",
+      cab?.fleet_rate_per_km || cab?.latestBooking?.fleet_rate_per_km || "",
 
-fleet_fixed_rate:
-  cab?.latestBooking?.fleet_fixed_rate ?? "",
+    fleet_fixed_rate:
+      cab?.fleet_fixed_rate || cab?.latestBooking?.fleet_fixed_rate || "",
 
   };
 

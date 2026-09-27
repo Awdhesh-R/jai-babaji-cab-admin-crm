@@ -376,11 +376,13 @@ const CabOverview = ({cab_id}) => {
                                 <div className="flex items-center gap-4">
                                     <div className="flex-1 bg-gray-100 rounded-xl px-2 py-3">
                                         <div className="text-xs text-gray-500 mb-1">Driver Name</div>
-                                        <div className="font-semibold text-gray-800 text-sm">{overview?.driver?.driverName ? overview?.driver?.driverName : "N/A"}</div>
+                                        <div className="font-semibold text-gray-800 text-sm">
+                                            {overview?.driver?.driverName ? overview.driver.driverName : (overview?.cab_driver_details?.driverName ? overview.cab_driver_details.driverName : "N/A")}
+                                        </div>
                                     </div>
                                     <div className="flex-1 bg-blue-100 rounded-xl px-2 py-3">
                                         <div className="text-xs text-gray-500 mb-1">Mobile Number</div>
-                                        <div className="font-semibold text-gray-900 text-sm">+91 {overview?.driver?.driverMobile ? overview?.driver?.driverMobile : "9999999999"}
+                                        <div className="font-semibold text-gray-900 text-sm">+91 {overview?.driver?.driverMobile ? overview.driver.driverMobile : (overview?.cab_driver_details?.driverMobile ? overview.cab_driver_details.driverMobile : "9999999999")}
                                         </div>
                                     </div>
                                 </div>

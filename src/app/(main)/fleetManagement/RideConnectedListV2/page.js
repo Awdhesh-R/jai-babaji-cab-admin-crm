@@ -19,7 +19,7 @@ const rideData = [
     fare: "₹2050/-",
     way: "Oneway",
     plate: "BR01PM8000",
-    company: "jaiBabajiCab",
+    company: "rodYaan",
   },
   {
     rideId: "17612814124110",
@@ -35,7 +35,7 @@ const rideData = [
     fare: "₹2100/-",
     way: "Oneway",
     plate: "BR01PM8001",
-    company: "jaiBabajiCab",
+    company: "rodYaan",
   },
   {
     rideId: "17612742777782",
@@ -51,7 +51,7 @@ const rideData = [
     fare: "₹2150/-",
     way: "Oneway",
     plate: "BR01PM8002",
-    company: "jaiBabajiCab",
+    company: "rodYaan",
   },
   {
     rideId: "17612201294403",
@@ -67,7 +67,7 @@ const rideData = [
     fare: "₹2180/-",
     way: "Oneway",
     plate: "BR01PM8003",
-    company: "jaiBabajiCab",
+    company: "rodYaan",
   },
   {
     rideId: "17612028751133",
@@ -83,7 +83,7 @@ const rideData = [
     fare: "₹2200/-",
     way: "Oneway",
     plate: "BR01PM8004",
-    company: "jaiBabajiCab",
+    company: "rodYaan",
   },
 ];
 

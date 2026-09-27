@@ -6,6 +6,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "api.rodyaan.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "api.jaibabajicab.com",
         pathname: "/**",
       },
@@ -76,7 +81,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://maps.googleapis.com https://api.olamaps.io https://eazypay.icicibank.com", // Google Maps & OlaMaps styles
               "img-src 'self' data: https: https://maps.googleapis.com https://maps.gstatic.com https://api.olamaps.io https://eazypay.icicibank.com", // Google Maps & OlaMaps tiles
               "font-src 'self' data: https://fonts.gstatic.com", // Google Fonts
-              "connect-src 'self' https://api.jaibabajicab.com https://*.jaibabajicab.com https://maps.googleapis.com https://api.olamaps.io http://local-admin.jaibabajicab.com:5001 http://localhost:5001 https://eazypay.icicibank.com", // Google Maps & OlaMaps API calls
+              "connect-src 'self' https://api.rodyaan.com https://api.jaibabajicab.com https://*.jaibabajicab.com https://maps.googleapis.com https://api.olamaps.io http://local-admin.jaibabajicab.com:5001 http://localhost:5001 https://eazypay.icicibank.com", // Google Maps & OlaMaps API calls
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self' https://eazypay.icicibank.com", // ICICI Bank EazyPay form submissions

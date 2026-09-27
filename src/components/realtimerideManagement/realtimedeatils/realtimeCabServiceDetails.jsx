@@ -67,15 +67,16 @@ const CabServiceDetails = ({
   const CabData = cabServiceData?.cabDetails;
   const isProbabled = !!rideDetails?.is_probabal;
   const cabImages = {
-    mini: process.env.NEXT_PUBLIC_MINI,
-    sedan: process.env.NEXT_PUBLIC_SEDAN,
-    suv: process.env.NEXT_PUBLIC_SUV,
+    mini: process.env.NEXT_PUBLIC_MINI || '/images/2.png',
+    sedan: process.env.NEXT_PUBLIC_SEDAN || '/images/3.png',
+    suv: process.env.NEXT_PUBLIC_SUV || '/images/1.png',
   };
 
   const searchOperatorCab = (registration_no) => {
     return apiClient(
-      "GET",
-      `/fleet/search-operator?registration_no=${registration_no}`,
+      "POST",
+      "/one_time_cabs/searchOneTimeCab/",
+      { searchTerm: registration_no }
     );
   };
 
@@ -84,7 +85,7 @@ const CabServiceDetails = ({
   };
 
   const createCabDriverOwner = (payload) => {
-    return apiClient("POST", "/fleet/create-operator-cab-driver", payload);
+    return apiClient("POST", "/one_time_cabs/addOneTimeCabs/", payload);
   };
   const [oneTimeOpen, setOneTimeOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -256,15 +257,15 @@ const CabServiceDetails = ({
         cab_reg: cab?.cab_reg ?? "",
         cab_type: getCabType(cab?.cab_type),
         cab_model: cab?.cab_model ?? "",
-        cab_source: cab?.source ?? "",
+        cab_source: cab?.source ?? cab?.cab_source ?? "",
       },
       driverDetails: {
         ...prev.driverDetails,
-        driver_id: cab?.driver?.id ?? "",
-        driver_name: cab?.driver?.full_name ?? "",
-        driver_image: cab?.driver?.profile_pic ?? "",
-        driver_mobile: cab?.driver?.mobile_no ?? "",
-        driver_rating: cab?.driver?.avg_rating ?? 0,
+        driver_id: cab?.driver?.id ?? cab?.driver?.driver_id ?? cab?.driver_id ?? "",
+        driver_name: cab?.driver?.full_name ?? cab?.driver?.driver_name ?? cab?.driver_name ?? cab?.drv_name ?? "",
+        driver_image: cab?.driver?.profile_pic ?? cab?.driver?.driver_image ?? cab?.driver_image ?? "",
+        driver_mobile: cab?.driver?.mobile_no ?? cab?.driver?.driver_mobile ?? cab?.driver_mobile ?? "",
+        driver_rating: cab?.driver?.avg_rating ?? cab?.driver_rating ?? 0,
       },
     }));
     setShowCabList(false);
@@ -424,12 +425,12 @@ const CabServiceDetails = ({
     confirmed: handleAssignCab,
     assigned: handleArrivedCab,
     arrived: () =>
-      // CabData?.cab_source === "jaiBabajiCab"
+      // CabData?.cab_source === "rodYaan"
       //   ? handleStartTrip()
       //   : 
         setStartTripPopUp(true),
     started: () =>
-      // CabData?.cab_source === "jaiBabajiCab"
+      // CabData?.cab_source === "rodYaan"
       //   ? handleEndTrip()
       //   : 
         setEndTripPopUp(true),
@@ -495,21 +496,16 @@ const CabServiceDetails = ({
           cabTypes?.find((c) => c.id === oneTimeData.cab_type)?.cab_type || "";
 
         const payload = {
-          fleet_rate_per_km: 0,
-          fleet_fixed_rate: "0",
-          cab_model_name: selectedCabModelName,
-          cab_type_name: selectedCabTypeName,
-          urid: rideDetails?.urid,
-          registration_no: oneTimeData.rc,
-
-          driver: {
-            full_name: oneTimeData.driver_name,
-            mobile_no: oneTimeData.driver_mobile,
-          },
-          owner: {
-            full_name: oneTimeData.owner_name,
-            mobile_no: oneTimeData.owner_mobile,
-          },
+          dl: oneTimeData.dl || "NA",
+          rc: oneTimeData.rc,
+          driver_mobile: oneTimeData.driver_mobile,
+          driver_name: oneTimeData.driver_name,
+          driver_whatsapp: oneTimeData.driver_whatsapp,
+          cab_model: oneTimeData.cab_model,
+          private_value: oneTimeData.private_value || "Yes",
+          owner_name: oneTimeData.owner_name || "NA",
+          owner_mobile: oneTimeData.owner_mobile || "0000000000",
+          status: oneTimeData.status || "active"
         };
 
         const res = await updateOrCreateDriver(payload);
@@ -574,26 +570,16 @@ const CabServiceDetails = ({
           cabTypes?.find((c) => c.id === oneTimeData.cab_type)?.cab_type || "";
 
         const payload = {
-          fleet_rate_per_km: 0,
-          fleet_fixed_rate: "0",
-          cab_model_name: selectedCabModelName, // string
-          cab_type_name: selectedCabTypeName, // string
-          urid: rideDetails?.urid,
-
-          cab: {
-            registration_no: oneTimeData.rc,
-            cab_type: Number(oneTimeData.cab_type),
-            cab_model: Number(oneTimeData.cab_model),
-            fuel_type: 2,
-          },
-          driver: {
-            full_name: oneTimeData.driver_name,
-            mobile_no: oneTimeData.driver_mobile,
-          },
-          owner: {
-            full_name: oneTimeData.owner_name,
-            mobile_no: oneTimeData.owner_mobile,
-          },
+          dl: oneTimeData.dl || "NA",
+          rc: oneTimeData.rc,
+          driver_mobile: oneTimeData.driver_mobile,
+          driver_name: oneTimeData.driver_name,
+          driver_whatsapp: oneTimeData.driver_whatsapp,
+          cab_model: String(oneTimeData.cab_model),
+          private_value: oneTimeData.private_value || "Yes",
+          owner_name: oneTimeData.owner_name || "NA",
+          owner_mobile: oneTimeData.owner_mobile || "0000000000",
+          status: oneTimeData.status || "active"
         };
 
         const res = await createCabDriverOwner(payload);
@@ -696,17 +682,17 @@ const CabServiceDetails = ({
     // 👆 ye line IMPORTANT hai
 
     let cabModelName = "";
-    if (typeof CabData.cab_model === "number") {
+    if (CabData.cab_model && !isNaN(CabData.cab_model)) {
       cabModelName =
-        cabModels.find((c) => c.id === CabData.cab_model)?.make_model || "";
+        cabModels.find((c) => c.id === Number(CabData.cab_model))?.make_model || "";
     } else {
       cabModelName = CabData.cab_model || "";
     }
 
     let cabTypeName = "";
-    if (typeof CabData.cab_type === "number") {
+    if (CabData.cab_type && !isNaN(CabData.cab_type)) {
       cabTypeName =
-        cabTypes.find((c) => c.id === CabData.cab_type)?.cab_type || "";
+        cabTypes.find((c) => c.id === Number(CabData.cab_type))?.cab_type || "";
     } else {
       cabTypeName = CabData.cab_type || "";
     }
@@ -903,15 +889,16 @@ const CabServiceDetails = ({
                 </div>
                 <div className="flex flex-row items-center gap-2">
                   <div className="py-2">
-                    <Image
+                    <img
                       src={
-                        cabImages[CabData?.cab_type?.toLowerCase?.()] ??
-                        process.env.NEXT_PUBLIC_SUV
+                        cabImages[CabData?.cab_type?.toLowerCase?.()] ||
+                        cabImages.suv || '/images/1.png'
                       }
                       alt="cab icon"
                       width={200}
                       height={100}
                       className="object-contain"
+                      onError={(e) => { e.target.onerror = null; e.target.src = '/images/car.png'; }}
                     />
                   </div>
                   <div className="flex  flex-col justify-between px-4 py-2">

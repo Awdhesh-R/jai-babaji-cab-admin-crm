@@ -55,7 +55,7 @@ if (token && isTokenExpired(token)) {
           const parts = token.split('.');
           if (parts.length >= 2) {
             const obj = jwtDecode(token);
-            userId = obj.user_id;
+            userId = obj.user_id || obj.id || obj.actId;
           }
         } catch (e) {
           userId = undefined;

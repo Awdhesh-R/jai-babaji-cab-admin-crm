@@ -25,7 +25,7 @@ export async function downloadInvoice(item) {
       <!-- Header -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
         <div>
-          <h1 style="color:#2563eb; margin:0;">jaiBabajiCab Auto Services</h1>
+          <h1 style="color:#2563eb; margin:0;">rodYaan Auto Services</h1>
           <p style="margin:4px 0; font-size:13px; color:#6b7280;">
             Bihar, India • support@jaibabajicab.com
           </p>
@@ -84,7 +84,7 @@ export async function downloadInvoice(item) {
       <!-- Footer -->
       <hr style="border:none; border-top:1px solid #e5e7eb; margin:30px 0 10px 0;"/>
       <p style="text-align:center; color:#6b7280; font-size:12px;">
-        Thank you for choosing <b>jaiBabajiCab Auto Services</b>.<br/>
+        Thank you for choosing <b>rodYaan Auto Services</b>.<br/>
         This invoice was generated automatically and does not require a signature.
       </p>
     </div>

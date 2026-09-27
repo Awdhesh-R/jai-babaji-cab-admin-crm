@@ -12,6 +12,17 @@ import Swal from "sweetalert2";
 
 const RideSection = ({ cabData, updateCabData, isUpdatedFare, ridess, userDetails, setUserDetails, selectedCabs, setSelectedCabs, userAgreeData, cabDataFound, setCheckUpdate, updateRideDetails }) => {
 
+    const getValidCabImage = (icon, type) => {
+        if (icon && typeof icon === 'string' && icon !== "null" && icon !== "undefined" && icon.trim() !== "") {
+            return icon;
+        }
+        const t = type?.toLowerCase();
+        if (t === 'mini') return '/images/cab/mini-cab.png';
+        if (t === 'sedan') return '/images/cab/sedan-cab.png';
+        if (t === 'suv') return '/images/cab/suv-cab.png';
+        return '/images/car.png';
+    };
+
     //States to update data
     const [found, setFound] = useState("");
     const [selected, setSelected] = useState(() => {
@@ -220,12 +231,13 @@ const RideSection = ({ cabData, updateCabData, isUpdatedFare, ridess, userDetail
                             >
                                 <div className="w-full flex flex-col items-center gap-3">
                                     <div className="rounded-xl flex items-start">
-                                            <Image
-                                                src={ridess?.cab_details_json?.cab_icon ||(ridess?.estimatedFareList?.find((fare)=> fare.cab_type.toLowerCase() === ridess?.booking_type?.toLowerCase())?.cab_icon) || "/images/car.png"}
+                                            <img
+                                                src={getValidCabImage(ridess?.cab_details_json?.cab_icon || ridess?.estimatedFareList?.find((fare)=> fare.cab_type.toLowerCase() === ridess?.booking_type?.toLowerCase())?.cab_icon, ridess?.booking_type)}
                                                 alt="Cab"
                                                 width={120}
                                                 height={120}
                                                 className="object-contain rounded-xl"
+                                                onError={(e) => { e.target.onerror = null; e.target.src = getValidCabImage(null, ridess?.booking_type); }}
                                             />
                                     </div>
 
@@ -353,19 +365,14 @@ const RideSection = ({ cabData, updateCabData, isUpdatedFare, ridess, userDetail
                                 <div className="w-full flex items-center gap-8 mb-3">
                                     {/* IMAGE */}
                                     <div className="ml-[7%] rounded-xl flex items-start">
-                                        {ride?.cab_icon ? (
-                                            <Image
-                                                src={ride?.cab_icon}
-                                                alt="Cab"
-                                                width={120}
-                                                height={120}
-                                                className="object-contain rounded-xl"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                                No Image
-                                            </div>
-                                        )}
+                                        <img
+                                            src={getValidCabImage(ride?.cab_icon, ride?.cab_type)}
+                                            alt="Cab"
+                                            width={120}
+                                            height={120}
+                                            className="object-contain rounded-xl"
+                                            onError={(e) => { e.target.onerror = null; e.target.src = getValidCabImage(null, ride?.cab_type); }}
+                                        />
                                     </div>
 
                                     {/* PRICE + COUPON */}

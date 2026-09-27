@@ -174,7 +174,7 @@ const AllRealTimeBookingCard = ({
         "POST",
         "/ride_management/admin-accept-reject-booking-request",
         {
-          type: cabDetails.source === "jaiBabajiCab" ? "jaiBabajiCab" : "Operator",
+          type: cabDetails.source === "rodYaan" ? "rodYaan" : "Operator",
           driver_id: cabDetails.driver.id,
           booking_id: selectedRide.id,
           booking_type: "realTime",
@@ -622,19 +622,19 @@ setAllRides((prev) =>
                   <div className="flex gap-4 justify-between">
                     <span className="">Estimated Fare</span>
                     <span className=" text-blue-600 font-semibold">
-                      ₹{ride?.price_details_json?.estimated_fare}
+                      ₹{ride?.price_details_json?.estimated_fare ?? ride?.price_details_json?.estimated_price ?? 0}
                     </span>
                   </div>
-                  {/* <div className="flex gap-4 justify-between">
+                  <div className="flex gap-4 justify-between">
                     <span className="">Advance Amount</span>
                     <span className=" text-blue-600 font-semibold">
-                      ₹{ride?.price_details_json?.advance_amount}
+                      ₹{ride?.price_details_json?.advance_amount ?? ride?.price_details_json?.advance_to_be ?? 0}
                     </span>
-                  </div> */}
+                  </div>
                   <div className="flex gap-4 justify-between">
                     <span className="">Collected By Driver</span>
                     <span className=" text-blue-600 font-semibold">
-                      ₹{ride?.price_details_json?.collected_by_driver}
+                      ₹{ride?.price_details_json?.collected_by_driver ?? ride?.amount_to_be_Paid ?? 0}
                     </span>
                   </div>
                 </div>

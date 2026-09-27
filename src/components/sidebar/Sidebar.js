@@ -165,7 +165,7 @@ export default function Sidebar() {
     setActive("");
     dispatch(
       setHeader({
-        title: "jaiBabajiCab Fleet",
+        title: "rodYaan Fleet",
         subtitle: "Real-time fleet management and analytics",
       }),
     );
@@ -575,11 +575,10 @@ export default function Sidebar() {
               <button onClick={handleClick} className="px-6 py-4">
                 <div className="flex gap-2">
                   <div>
-                    <span className="font-bold text-black  text-2xl">Rod</span>
+                    <span className="font-bold text-black  text-2xl">rod</span>
                     <span className="text-2xl font-bold bg-gradient-to-br from-[#FFC403] to-[#e96303] bg-clip-text text-transparent">
-                      B
+                      Yaan
                     </span>
-                    <span className="font-bold text-black  text-2xl">ez</span>
                   </div>
                   <span className="font-bold text-black  text-2xl">
                     Dashboard
@@ -603,7 +602,7 @@ export default function Sidebar() {
             {menuItems
               .filter((route) => {
                 if (route.allowedId) {
-                  if (route.allowedId.includes(userData?.id)) {
+                  if (route.allowedId.includes(Number(userData?.id))) {
                     return true;
                   }
                   return false;
@@ -651,7 +650,7 @@ export default function Sidebar() {
                           {item.subItems
                             .filter((route) => {
                               if (route.allowedId) {
-                                if (route.allowedId.includes(userData?.id)) {
+                                if (route.allowedId.includes(Number(userData?.id))) {
                                   return true;
                                 }
                                 return false;

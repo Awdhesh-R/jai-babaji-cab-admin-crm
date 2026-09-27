@@ -223,7 +223,7 @@ const AllRideTable = ({ rides = [], refreshList, moreData, checklastCardRef, cus
                           Estimated Fare
                         </span>
                         <span className=' text-blue-600 font-semibold'>
-                            ₹{ride?.price_details_json?.estimated_fare}
+                            ₹{ride?.price_details_json?.estimated_fare ?? ride?.price_details_json?.estimated_price ?? 0}
                         </span>
                       </div>
                       <div className='flex gap-4 justify-between'>
@@ -231,7 +231,7 @@ const AllRideTable = ({ rides = [], refreshList, moreData, checklastCardRef, cus
                           Collected By Driver
                         </span>
                         <span className=' text-blue-600 font-semibold'>
-                            ₹{ride?.price_details_json?.collected_by_driver}
+                            ₹{ride?.price_details_json?.collected_by_driver ?? ride?.amount_to_be_Paid ?? 0}
                         </span>
                       </div>
                     </div>}
@@ -249,7 +249,7 @@ const AllRideTable = ({ rides = [], refreshList, moreData, checklastCardRef, cus
                           Advance Amount
                         </span>
                         <span className=' text-blue-600 font-semibold'>
-                            ₹{ride?.price_details_json?.advance_amount}
+                            ₹{ride?.price_details_json?.advance_amount ?? ride?.price_details_json?.advance_to_be ?? 0}
                         </span>
                       </div>
                       <div className='flex gap-4 justify-between'>
@@ -257,7 +257,7 @@ const AllRideTable = ({ rides = [], refreshList, moreData, checklastCardRef, cus
                           Collected By Driver
                         </span>
                         <span className=' text-blue-600 font-semibold'>
-                            ₹{ride?.price_details_json?.collected_by_driver}
+                            ₹{ride?.price_details_json?.collected_by_driver ?? ride?.amount_to_be_Paid ?? 0}
                         </span>
                       </div>
                     </div>}

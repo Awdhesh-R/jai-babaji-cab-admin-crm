@@ -5,10 +5,10 @@ const AutoConfirmLBookingist = lazy(()=> import("@/components/operations/Operati
 const Last24HrsBookingList = lazy(()=> import("@/components/operations/OperationDashboard/Last24HrsBookingList"));
 const UpcomingRideList = lazy(()=> import("@/components/operations/OperationDashboard/UpcomingRides"));
 const PublicRideList = lazy(()=> import("@/components/operations/OperationDashboard/PublicRideList"));
-const AlljaiBabajiCabRide = lazy(()=> import("@/components/operations/OperationDashboard/AlljaiBabajiCabRide"));
+const AllrodYaanRide = lazy(()=> import("@/components/operations/OperationDashboard/AllrodYaanRide"));
 const AllOperatorRide = lazy(()=> import("@/components/operations/OperationDashboard/AllOperatorRide"));
 const AllOperatorUpcoming = lazy(()=> import("@/components/operations/OperationDashboard/AllOperatorUpcoming"));
-const AlljaiBabajiCabUpcoming = lazy(()=> import("@/components/operations/OperationDashboard/AlljaiBabajiCabUpcoming"));
+const AllrodYaanUpcoming = lazy(()=> import("@/components/operations/OperationDashboard/AllrodYaanUpcoming"));
 const AllConfirmWaiting = lazy(()=> import("@/components/operations/OperationDashboard/AllConfirmWaiting"));
 const AllConfirmAll = lazy(()=> import("@/components/operations/OperationDashboard/AllConfirmAll"));
 const AllCompleted = lazy(()=> import("@/components/operations/OperationDashboard/AllCompleted"));
@@ -23,10 +23,10 @@ const AllOperationsRidePage = () => {
 
 
         // ⭐ New Tabs Colors
-    "alljaibabajicabride": "bg-purple-200 border border-purple-500 text-purple-700",
+    "allrodYaanride": "bg-purple-200 border border-purple-500 text-purple-700",
     "alloperatorride": "bg-indigo-200 border border-indigo-500 text-indigo-700",
     "alloperatorupcoming": "bg-orange-200 border border-orange-500 text-orange-700",
-    "alljaibabajicabupcoming": "bg-teal-200 border border-teal-500 text-teal-700",
+    "allrodYaanupcoming": "bg-teal-200 border border-teal-500 text-teal-700",
     "allconfirmwaiting": "bg-pink-200 border border-pink-500 text-pink-700",
     "allconfirmall": "bg-rose-200 border border-rose-500 text-rose-700",
     "allcompleted": "bg-lime-200 border border-lime-500 text-lime-700"
@@ -56,9 +56,9 @@ const AllOperationsRidePage = () => {
 
     // new Changes
     {
-        label: " jaiBabajiCab Ride",
-        value: "alljaibabajicabride",
-        component: AlljaiBabajiCabRide
+        label: " rodYaan Ride",
+        value: "allrodYaanride",
+        component: AllrodYaanRide
     },
 
 
@@ -75,9 +75,9 @@ const AllOperationsRidePage = () => {
         component: AllOperatorUpcoming
     },
     {
-        label: " jaiBabajiCab Upcoming",
-        value: "alljaibabajicabupcoming",
-        component: AlljaiBabajiCabUpcoming
+        label: " rodYaan Upcoming",
+        value: "allrodYaanupcoming",
+        component: AllrodYaanUpcoming
     },
         {
         label: " Confirm Waiting",

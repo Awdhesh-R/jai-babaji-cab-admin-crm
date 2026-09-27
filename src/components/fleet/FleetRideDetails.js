@@ -67,7 +67,7 @@ const topSummary = [
     text: "text-white",
   },
   {
-    label: "jaiBabajiCab Fee",
+    label: "rodYaan Fee",
     value: "₹92",
     icon: <FaChartLine className="text-white" />,
     bg: "bg-gradient-to-r from-[#FB923C] to-[#F97316]",

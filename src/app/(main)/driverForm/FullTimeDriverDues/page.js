@@ -32,7 +32,7 @@ export default function PaymentHistory() {
   const [searchInput, setSearchInput] = useState("");
   const [show, setShow] = useState(false);
   const [nameSearch, setNameSearch] = useState("");
-  const [jaiBabajiCabDrivers, setjaiBabajiCabDrivers] = useState([]);
+  const [rodYaanDrivers, setrodYaanDrivers] = useState([]);
   const [openPopupIndex, setOpenPopupIndex] = useState(null);
 
   const [filter, setFilter] = useState({
@@ -286,16 +286,16 @@ export default function PaymentHistory() {
     }
   };
 
-  // Fetch jaiBabajiCab drivers
-  const fetchjaiBabajiCabDrivers = useCallback(async () => {
+  // Fetch rodYaan drivers
+  const fetchrodYaanDrivers = useCallback(async () => {
     setLoading(true);
     try {
       const response = await apiClient("GET", "/rb_drivers/getAllDriver", {});
       if (response.status || response.success) {
-        setjaiBabajiCabDrivers(response.data.data || response.data || []);
+        setrodYaanDrivers(response.data.data || response.data || []);
       }
     } catch (error) {
-      console.error("Error fetching jaiBabajiCab drivers:", error);
+      console.error("Error fetching rodYaan drivers:", error);
     } finally {
       setLoading(false);
     }
@@ -304,20 +304,20 @@ export default function PaymentHistory() {
   // When show popup is true, fetch both drivers
   useEffect(() => {
     if (show) {
-      fetchjaiBabajiCabDrivers();
+      fetchrodYaanDrivers();
     }
-  }, [show, fetchjaiBabajiCabDrivers]);
+  }, [show, fetchrodYaanDrivers]);
 
-  // Map jaiBabajiCab drivers to uniform format
-  const mappedjaiBabajiCab = jaiBabajiCabDrivers.map((d) => ({
+  // Map rodYaan drivers to uniform format
+  const mappedrodYaan = rodYaanDrivers.map((d) => ({
     driverId: d.id,
     driverName: d.driverName,
     driverMobile: d.driverMobile || "N/A",
-    fleetType: "jaiBabajiCab",
+    fleetType: "rodYaan",
   }));
 
   // Combine based on fleet filter
-  const combinedDrivers = mappedjaiBabajiCab;
+  const combinedDrivers = mappedrodYaan;
 
   // Filter combined drivers by search fields
   const displayData = combinedDrivers.filter(
@@ -610,7 +610,7 @@ export default function PaymentHistory() {
                       <td
                         onClick={() =>
                           router.push(
-                            `/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`,
+                            `/driverForm/rodYaanDriverWallet/${t.driver_id}`,
                           )
                         }
                         className="text-left font-semibold text-sm cursor-pointer hover:text-blue-600 hover:underline transition duration-200"
@@ -852,7 +852,7 @@ export default function PaymentHistory() {
                     <span
                       onClick={() =>
                         router.push(
-                          `/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`,
+                          `/driverForm/rodYaanDriverWallet/${t.driver_id}`,
                         )
                       }
                       className="text-right cursor-pointer hover:text-blue-600 hover:underline transition duration-200"

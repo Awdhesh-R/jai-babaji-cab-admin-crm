@@ -349,14 +349,22 @@
           kInput === "from" ? setLoading(true) : setToLoad(true);
           setSuggestions([]);
           const place = {
-              api_key: process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
-              input: input.trim()
+              placeName: input.trim(),
+              api_key: process.env.GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
           };
           try {
-              const response = await apiClient('GET','https://api.olamaps.io/places/v1/autocomplete', place, null, false, true);
-              const data = await response;
-              if (!data?.status === 'ok') throw new Error(data?.message || "Failed to fetch");
-              setSuggestions(data.predictions || []);
+              const data = await apiClient('POST','/place/search-place', place, null, false, false);
+              if (!data?.success) throw new Error(data?.message || "Failed to fetch");
+              
+              // Normalize backend response to match UI expectations (description, geometry.location)
+              let rawData = data?.data || [];
+              let suggestionsArray = Array.isArray(rawData) ? rawData : [rawData];
+              const mappedSuggestions = suggestionsArray.map(item => ({
+                  description: item?.place || item?.name,
+                  geometry: { location: { lat: item?.lat, lng: item?.long || item?.lng } }
+              })).filter(item => item.description);
+              
+              setSuggestions(mappedSuggestions);
           } catch (err) {
               console.error("Error fetching autocomplete suggestions:", err.message);
           } finally {
@@ -573,11 +581,11 @@
           let payData = {
               urid: rideData?.urid,
               remark: payStatus,
-              remarkDiscription: selectedCabs?.remarks,
-              user_id: String(userType?.id),
-              user_type: userType?.name,
-              amount: String(selectedCabs?.advance),
-              carrier_required: selectedCabs?.carrier,
+              remarkDiscription: selectedCabs?.remarks || '',
+              user_id: String(userType?.id || ''),
+              user_type: userType?.name || '',
+              amount: String(selectedCabs?.advance || 0),
+              carrier_required: selectedCabs?.carrier || 'no',
           }
 
           try {

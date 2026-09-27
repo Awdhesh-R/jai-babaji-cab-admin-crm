@@ -48,17 +48,17 @@ const tabs = ['All', 'Pending', 'Searched', 'Processing', 'Confirmed', 'Assigned
 
 
 const endPointMap = {
-  all: "allRide",
-  searched: "allRide",
-  pending: "allRide",
-  processing: "allRide",
-  confirmed: "confirmRide",
-  started: "allRide",
-  assigned: "allRide",
-  arrived: "arrivedRide",
-  completed: "complete",
-  cancelled: "cancelRide",
-  notcollected: "complete",
+  all: "fetch-rides/all",
+  searched: "fetch-rides/all",
+  pending: "fetch-rides/pending",
+  processing: "fetch-rides/processing",
+  confirmed: "fetch-rides/confirmed",
+  started: "fetch-rides/started",
+  assigned: "fetch-rides/assigned",
+  arrived: "fetch-rides/arrived",
+  completed: "fetch-rides/completed",
+  cancelled: "fetch-rides/cancelled",
+  notcollected: "fetch-rides/completed",
   connectedRide: "allRide",
 };
 
@@ -172,7 +172,10 @@ const AllRidesPage = () => {
           startsAt: dateFilter.startDate? encodeURIComponent(moment(dateFilter.startDate).format("YYYY-MM-DD HH:mm:ss.SSS")): null,
           endsAt: dateFilter.endDate? encodeURIComponent(moment(dateFilter.endDate).add(23, "hours").add(59, "minutes").add(59,"seconds").format("YYYY-MM-DD HH:mm:ss.SSS")): null
         }
-        const apiEndpoint = endPointMap[statusTab] || "allRide";
+        let apiEndpoint = endPointMap[statusTab] || "allRide";
+        if (querry) {
+          apiEndpoint = `fetch-rides/${statusTab === 'all' ? 'all' : statusTab}`;
+        }
         const response = await apiClient("GET", `/ride_management/${apiEndpoint}/${pageNo}`, params);
         let ridesArr = [];
         let hasMoreData = false;
@@ -194,6 +197,18 @@ const AllRidesPage = () => {
           }
           const total = (response?.totalRequest || 0) + (response?.totalBooking || 0) + (response?.totalConfirmed || 0) || response?.totalCount || ridesArr.length;
           setTotalCount(total);
+          hasMoreData = ridesArr.length > 0;
+        } else if (response?.data?.data && Array.isArray(response.data.data)) {
+          ridesArr = response.data.data;
+          if (statusTab === "notcollected") {
+            ridesArr = ridesArr.filter(ride => !ride.is_collected);
+          } else if (statusTab === "completed") {
+            ridesArr = ridesArr.filter(ride => ride.is_collected);
+          }
+          if (response?.data?.total) {
+             setRideServiceTypeData(response?.data?.total);
+             setTotalCount(response?.data?.total?.total_count || response?.data?.total?.count || ridesArr.length);
+          }
           hasMoreData = ridesArr.length > 0;
         } else if (response?.data?.enrichedRides && Array.isArray(response.data.enrichedRides)) {
           ridesArr = response.data.enrichedRides;

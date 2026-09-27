@@ -14,6 +14,17 @@ import { LuUser } from "react-icons/lu";
 import { toast } from "react-toastify";
 
 const AddNewBooking = () => {
+    const getValidCabImage = (icon, type) => {
+        if (icon && typeof icon === 'string' && icon !== "null" && icon !== "undefined" && icon.trim() !== "") {
+            return icon;
+        }
+        const t = type?.toLowerCase();
+        if (t === 'mini') return '/images/2.png';
+        if (t === 'sedan') return '/images/3.png';
+        if (t === 'suv') return '/images/1.png';
+        return '/images/car.png';
+    };
+
     const [isActive, setIsActive] = useState(true);
     const [userPhoneNumber, setUserPhoneNumber] = useState('');
     const [userName, setUserName] = useState('');
@@ -87,14 +98,22 @@ const AddNewBooking = () => {
         kInput === "from" ? setLoading(true) : setToLoad(true);
         setSuggestions([]);
         const place = {
-            api_key: process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
-            input: input.trim()
+            placeName: input.trim(),
+            api_key: process.env.GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
         };
         try {
-            const response = await apiClient('GET', 'https://api.olamaps.io/places/v1/autocomplete', place, null, false, true);
-            const data = await response;
-            if (!data?.status === 'ok') throw new Error(data?.message || "Failed to fetch");
-            setSuggestions(data.predictions || []);
+            const data = await apiClient('POST', '/place/search-place', place, null, false, false);
+            if (!data?.success) throw new Error(data?.message || "Failed to fetch");
+            
+            // Normalize backend response to match UI expectations (description, geometry.location)
+            let rawData = data?.data || [];
+            let suggestionsArray = Array.isArray(rawData) ? rawData : [rawData];
+            const mappedSuggestions = suggestionsArray.map(item => ({
+                description: item?.place || item?.name,
+                geometry: { location: { lat: item?.lat, lng: item?.long || item?.lng } }
+            })).filter(item => item.description);
+            
+            setSuggestions(mappedSuggestions);
         } catch (err) {
             console.error("Error fetching autocomplete suggestions:", err.message);
         } finally {
@@ -133,12 +152,14 @@ const AddNewBooking = () => {
         }
 
         try {
-            const response = await apiClient('POST', '/search_service', locationData, {}, false, false);
+            const response = await apiClient('POST', '/ride_management/getUpdatedEstimatedFare', locationData, {}, true, false);
 
             if (response?.success && response.data) {
                 setServiceSearched(true);
                 setAvailableServices(response.data);
-                setFareDetails(response.data.oneway?.list);
+                // Handle both the old search_service and the new getUpdatedEstimatedFare response structures
+                const fareList = response.data.oneway?.list || response.data.estimatedPrice?.cabList || response.data.estimatedFareList || [];
+                setFareDetails(fareList);
                 toast.success(response.message || "Services found successfully!");
             } else {
                 toast.error(response.message || "No services found for the given locations.");
@@ -181,11 +202,12 @@ const AddNewBooking = () => {
             toast.error("Please select a cab type");
             return;
         }
-        if(!user_ref_id) {
-
-            await createNewUser();
+        let currentUserId = user_ref_id;
+        if(!currentUserId) {
+            currentUserId = await createNewUser();
+            if (!currentUserId) return;
         }
-        await addBooking();
+        await addBooking(currentUserId);
     }
     const searchUser = async (value) => {
         if(!userPhoneNumber) {
@@ -232,23 +254,27 @@ const AddNewBooking = () => {
                 console.log("Created User:", user);
                 setUser_ref_id(prev=> user.ref_user_id || '');
                 toast.success("User created successfully");
+                return user.ref_user_id || null;
             } else {
                 toast.error(response.message || "Failed to create user.");
+                return null;
             }       
         } catch (error) {
             console.error("Create User Error:", error);
             toast.error("An error occurred while creating user.");
+            return null;
         }
     }
 
-    const addBooking = async () => {
-        if(!user_ref_id) {
+    const addBooking = async (userIdToUse) => {
+        const finalUserId = typeof userIdToUse === 'string' ? userIdToUse : user_ref_id;
+        if(!finalUserId) {
             toast.error("User ID is missing. Cannot add booking.");
             return;
         }
         setCreatingBooking(true);
         const payData = {
-            user_id: user_ref_id,
+            user_id: finalUserId,
             cab_type_id: selectedCab.id,
             basePriceId: selectedCab.id,
             isSourceCityCluster: availableServices.sourceInCluster,
@@ -285,8 +311,8 @@ const AddNewBooking = () => {
             extra_time_per_minutes: selectedCab.extra_minutes_charge,
             extra_time_per_hr:  selectedCab?.package_extra_time_per_hr,
             is_local: availableServices.is_local? availableServices.is_local: false,
-            bothInCluster: availableServices.bothInCluster,
-            rideStateName: availableServices.sourceState.state,
+            bothInCluster: availableServices?.bothInCluster,
+            rideStateName: availableServices?.sourceState?.state || null,
             package_id: null,
             wa_country_code: "+91",
             booking_status: "pending",
@@ -301,10 +327,10 @@ const AddNewBooking = () => {
             },
             booking_date: `${formatDate(userDetails?.date)} ${userDetails?.bookingTime}`,
             distanceTimeGoogleData: {
-                distanceText: availableServices.google_data.distanceText,
-                distanceValue: availableServices.google_data.distanceValue,
-                durationText: availableServices.google_data.durationText,
-                durationValue: availableServices.google_data.durationValue
+                distanceText: availableServices?.distanceTimeGoogleData?.distanceText || "",
+                distanceValue: availableServices?.distanceTimeGoogleData?.distanceValue || 0,
+                durationText: availableServices?.distanceTimeGoogleData?.durationText || "",
+                durationValue: availableServices?.distanceTimeGoogleData?.durationValue || 0
             }
         }
         try {
@@ -791,19 +817,14 @@ const AddNewBooking = () => {
                                     <div className="w-full flex items-center gap-8 mb-3">
                                         {/* IMAGE */}
                                         <div className="ml-[7%] rounded-xl flex items-start">
-                                            {ride?.cab_icon ? (
-                                                <Image
-                                                    src={ride?.cab_icon}
-                                                    alt="Cab"
-                                                    width={120}
-                                                    height={120}
-                                                    className="object-contain rounded-xl"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                                    No Image
-                                                </div>
-                                            )}
+                                            <img
+                                                src={getValidCabImage(ride?.cab_icon, ride?.cab_type)}
+                                                alt="Cab"
+                                                width={120}
+                                                height={120}
+                                                className="object-contain rounded-xl"
+                                                onError={(e) => { e.target.onerror = null; e.target.src = getValidCabImage(null, ride?.cab_type); }}
+                                            />
                                         </div>
                                         {/* PRICE */}
                                         <div className="flex items-start flex-col">
@@ -823,7 +844,13 @@ const AddNewBooking = () => {
                                                         className={`"text-purple-700 dark:text-yellow-400"
                                                         text-[16px] font-bold`}
                                                     >
-                                                        ₹{ride?.estimated_fare}
+                                                        ₹{ride?.estimated_price || ride?.estimated_fare}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-4 justify-between">
+                                                    <span>Advance Amount</span>
+                                                    <span className="text-[16px] text-green-600 font-bold">
+                                                        ₹{ride?.advanceToBe || ride?.advance_amount || ride?.advance_amt || ride?.advance_to_be || ride?.advance || (ride?.estimated_price || ride?.estimated_fare ? Math.round((ride?.estimated_price || ride?.estimated_fare) * 0.2) : 0)}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-4 justify-between">

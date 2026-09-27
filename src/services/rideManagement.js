@@ -34,18 +34,18 @@ export const assignCab = async (cabData, driverData, rideDetails, changeReason) 
     if (!driverData) throw new Error("Please select a driver!");
 
     const payData = {
-        driver_id: driverData?.driver_id,
-        drv_name: driverData?.drv_name,
-        driver_mobile: driverData?.mobile_no,
-        drv_wa_number: driverData?.driver_wa_number || driverData?.mobile_no,
-        driver_image: driverData?.driver_image,
-        urid: rideDetails?.urid,
-        cab_reg: cabData?.cab_reg,
-        cab_id: cabData?.cab_id,
-        cab_model: cabData.cab_model,
-        cab_source: cabData.source,
-        reason: changeReason,
-        cab_type: getCabType(cabData?.cab_type_id),
+        driver_id: driverData?.driver_id ?? "",
+        drv_name: driverData?.driver_name ?? driverData?.drv_name ?? "",
+        driver_mobile: driverData?.driver_mobile ?? driverData?.mobile_no ?? "",
+        drv_wa_number: driverData?.driver_whatsapp ?? driverData?.driver_wa_number ?? driverData?.driver_mobile ?? driverData?.mobile_no ?? "",
+        driver_image: driverData?.driver_image ?? "",
+        urid: rideDetails?.urid ?? rideDetails?.id ?? "",
+        cab_reg: cabData?.cab_reg ?? "",
+        cab_id: cabData?.cab_id ?? "",
+        cab_model: cabData?.cab_model ?? "",
+        cab_source: cabData?.cab_source ?? cabData?.source ?? "",
+        reason: changeReason ?? "",
+        cab_type: getCabType(cabData?.cab_type ?? cabData?.cab_type_id),
     };
 
     const response = await apiClient(

@@ -9,8 +9,8 @@ import DevToolsProtection from "@/components/DevToolsProtection";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "jaiBabajiCab Admin Dashboard",
-  description: "jaiBabajiCab Customer Relationship Management",
+  title: "rodYaan Admin Dashboard",
+  description: "rodYaan Customer Relationship Management",
 };
 
 export default function RootLayout({ children }) {

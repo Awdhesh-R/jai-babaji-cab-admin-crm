@@ -43,8 +43,8 @@ export default function PageThree() {
                     {/* TOP: Brand Name row */}
                     <div className="w-full flex justify-center items-center mb-6">
                         <h1 className="text-3xl font-bold">
-                            <span className="text-white">jaiBabaji</span>
-                            <span className="text-yellow-400">Cab</span>
+                            <span className="text-white">rod</span>
+                            <span className="text-yellow-400">Yaan</span>
                         </h1>
                     </div>
 
@@ -56,7 +56,7 @@ export default function PageThree() {
                                 <FaCarSide className="text-black text-xl" />
                             </div>
                             <div>
-                                <h2 className="text-lg text-white font-bold  font-nunito">Welcome to jaiBabajiCab</h2>
+                                <h2 className="text-lg text-white font-bold  font-nunito">Welcome to rodYaan</h2>
                                 <p className="text-gray-400 text-sm">Sign in to your dashboard</p>
                             </div>
                         </div>

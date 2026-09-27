@@ -19,11 +19,11 @@ export const apiClient = async (
   let userId = null;
 
   if (typeof window !== "undefined") {
-    token = localStorage.getItem("token");
+    token = localStorage.getItem("token") || Cookies.get("adminAuthToken");
     if (token && !isAdmin) {
       try {
-        const { user_id } = await jwtDecode(token);
-        userId = user_id || null;
+        const decoded = await jwtDecode(token);
+        userId = decoded.user_id || decoded.id || decoded.actId || null;
         if (method.toUpperCase() === "GET") {
           // Removed console.log for security - endpoint not exposed
           if (userId && endpoint.includes(":userId")) {
@@ -73,8 +73,8 @@ export const apiClient = async (
     const status = error?.response?.status;
     if (
       typeof window !== "undefined" &&
-      (status === 401 || status === 403) &&
-      endpoint !== "/ride_management/add-admin-booking"
+      !isOlaAPI &&
+      (status === 401 || (status === 403 && endpoint !== "/search_service" && endpoint !== "/ride_management/add-admin-booking"))
     ) {
       localStorage.clear();
       Cookies.remove("adminAuthToken");

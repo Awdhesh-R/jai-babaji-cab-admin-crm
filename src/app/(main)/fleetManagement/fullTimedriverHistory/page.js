@@ -848,7 +848,7 @@ const handleSelect = (value) => {
                       className="border-b last:border-0"
                     >
                       {/* <td
-                    onClick={() => router.push(`/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`)} className="p-3 font-bold cursor-pointer ">
+                    onClick={() => router.push(`/driverForm/rodYaanDriverWallet/${t.driver_id}`)} className="p-3 font-bold cursor-pointer ">
                       {t.driver_name || "-"}
                       
       
@@ -861,7 +861,7 @@ const handleSelect = (value) => {
                       <td
                         onClick={() =>
                           router.push(
-                            `/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`
+                            `/driverForm/rodYaanDriverWallet/${t.driver_id}`
                           )
                         }
                         className="text-left font-semibold text-sm cursor-pointer hover:text-blue-600 hover:underline transition duration-200"
@@ -1108,7 +1108,7 @@ const handleSelect = (value) => {
                     <span
                       onClick={() =>
                         router.push(
-                          `/driverForm/jaiBabajiCabDriverWallet/${t.driver_id}`
+                          `/driverForm/rodYaanDriverWallet/${t.driver_id}`
                         )
                       }
                       className="text-right cursor-pointer hover:text-blue-600 hover:underline transition duration-200"

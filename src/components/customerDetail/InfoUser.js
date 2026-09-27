@@ -221,7 +221,7 @@ const InfoUser = ({
 
   if (rideDetails?.payment_method === "cashfree") {
     return `https://www.jaibabajicab.com/oldpay?urid=${rideDetails?.urid}`;
-    // return `http://local-website.jaibabajicab.tech/oldpay?urid=${rideDetails?.urid}`;
+    // return `http://local-website.rodYaan.tech/oldpay?urid=${rideDetails?.urid}`;
   }
   return "-";
 };

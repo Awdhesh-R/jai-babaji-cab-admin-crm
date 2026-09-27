@@ -164,7 +164,7 @@ const AddRbCab = () => {
                         Add Cabs Details
                     </h1>
                     <p className="text-gray-500 text-sm">
-                        Complete Cab registration for jaiBabajiCab
+                        Complete Cab registration for rodYaan
                     </p>
                 </div>
             </div>

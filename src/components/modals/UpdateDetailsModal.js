@@ -5,7 +5,7 @@ import { BsExclamationTriangle, BsSend } from "react-icons/bs";
 import { LuMessageSquare, LuMessageCircle } from "react-icons/lu";
 
 
-const UpdateDetailsModal = ({ isOpen, title, onClose, onSubmit, children, modalAction, payStatus }) => {
+const UpdateDetailsModal = ({ isOpen, title, onClose, onSubmit, children, modalAction, payStatus, isSubmitting }) => {
   const colorConfig = {
     'confirm_ride': {
       border: 'border-blue-600',
@@ -66,11 +66,13 @@ const UpdateDetailsModal = ({ isOpen, title, onClose, onSubmit, children, modalA
         <div className="max-h-[70vh] overflow-y-auto scroll-hide px-6 py-4">{children}</div>
 
         <div className="flex justify-end gap-4 px-6 py-4 border-t relative">
-          <button onClick={onClose} className="px-6 py-2 flex-1 rounded-lg border border-[#E5E7EB] text-black hover:bg-gray-100 transition">
+          <button onClick={onClose} disabled={isSubmitting} className="px-6 py-2 flex-1 rounded-lg border border-[#E5E7EB] text-black hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed">
             {modalAction === 'cancel_request' ? 'Keep Request' : 'Cancel'}
           </button>
 
-          <button onClick={onSubmit} className={`px-6 py-2 flex-1 rounded-lg text-white font-medium transition ${submitBtn}`}>{label}</button>
+          <button onClick={onSubmit} disabled={isSubmitting} className={`px-6 py-2 flex-1 rounded-lg text-white font-medium transition ${submitBtn} disabled:opacity-50 disabled:cursor-not-allowed`}>
+            {isSubmitting ? 'Processing...' : label}
+          </button>
           <div className='absolute left-[63%] bottom-7 z-12'>{modalAction === 'whatsapp_chat' && (<BsSend className='text-white text-lg font-bold' />)}</div>
         </div>
       </div>

@@ -19,7 +19,7 @@ const DriverDetails = ({id}) => {
   const router = useRouter();
 
   const Ride = () => {
-    router.push(`/driverForm/jaiBabajiCabDriverWallet/${id}`);
+    router.push(`/driverForm/rodYaanDriverWallet/${id}`);
   }
 
    const wallet = () => {
@@ -78,12 +78,16 @@ const DriverDetails = ({id}) => {
 
         {/* Left: Profile Image */}
         <div className="relative">
-          <Image
-            src={`/${driver?.driverImage || "images/kumar.jpg"}`}
+          <img
+            src={(() => {
+              let img = driver?.driverImage || "images/driverplaceholderimg.png";
+              return img.replace(/^\/+/, '/');
+            })()}
             alt="Driver"
             width={80}
             height={80}
-            className="rounded-full border-4 border-[#2563EB] shadow w-20 h-20 sm:w-24 sm:h-24"
+            className="rounded-full border-4 border-[#2563EB] shadow w-20 h-20 sm:w-24 sm:h-24 object-cover"
+            onError={(e) => { e.target.onerror = null; e.target.src = '/images/driverplaceholderimg.png'; }}
           />
           <span className="absolute bottom-0 right-0 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></span>
         </div>

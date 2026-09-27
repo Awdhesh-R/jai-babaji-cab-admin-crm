@@ -236,6 +236,15 @@ const formatDateToInput = (dateStr) => {
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 };
 
+const formatSecondsToHHMMSS = (seconds) => {
+    if (!seconds || isNaN(seconds)) return "00:00:00";
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+};
+
 const UserPrimaryData = ({ rideData, activityData, generalTemplates, cancelTemplates, checkUpdate, setCheckUpdate, showStatus, setShowStatus }) => {
 
 const [isChecked, setIsChecked] = useState(false);
@@ -255,15 +264,15 @@ const [isChecked, setIsChecked] = useState(false);
         bookingTime: formatBookingTime(rideData?.bookingTime) || '',
 
         estKm: rideData?.price_details_json?.estimated_km || '',
-        reqTime: rideData?.price_details_json?.estimated_time || rideData?.distance_time_google_data?.durationText || '',
-        estimatedFare: rideData?.price_details_json?.estimated_fare || 0,
+        reqTime: rideData?.price_details_json?.estimated_time || (rideData?.distance_time_google_data?.durationValue ? formatSecondsToHHMMSS(rideData.distance_time_google_data.durationValue) : ''),
+        estimatedFare: rideData?.price_details_json?.estimated_fare || rideData?.price_details_json?.estimated_price || 0,
         totalCharge: rideData?.price_details_json?.actual_travel_price || 0,
         tollCharge: rideData?.price_details_json?.toll_charge || 0,//rest
         parkingCharge: rideData?.price_details_json?.parking_charge || 0,//rest
         waitingCharge: rideData?.price_details_json?.waitingCharge || 0, 
         other_charge: rideData?.price_details_json?.other_charge || 0,
         discount: parseFloat(rideData?.price_details_json?.discount || 0),
-        advanceAmount: rideData?.price_details_json?.advance_amount || 0,
+        advanceAmount: rideData?.price_details_json?.advance_amount || rideData?.price_details_json?.advance_to_be || rideData?.price_details_json?.advance_amt || 0,
         remainingAmount: '',
         collected_by_driver: (rideData?.price_details_json?.collected_by_driver || 0),
         walletAmount: rideData?.wallet_amount || '',
@@ -279,7 +288,27 @@ const [isChecked, setIsChecked] = useState(false);
         couponCode: rideData?.payment_details_json?.coupon_apply_details?.coupon_details?.code || '',
     });
 
+    const [cityMap, setCityMap] = useState({});
+
+    useEffect(() => {
+        const fetchCities = async () => {
+            try {
+                const response = await apiClient('GET', '/city/getCityList');
+                if (response?.success || response?.status) {
+                    const map = {};
+                    response.data.forEach(city => {
+                        map[city.id] = city.city_name;
+                    });
+                    setCityMap(map);
+                }
+            } catch (error) {
+                console.error("Error fetching cities", error);
+            }
+        };
+        fetchCities();
+    }, []);
     
+
     const [suggestions, setSuggestions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [toLoad, setToLoad] = useState(false);
@@ -351,14 +380,22 @@ const [paymentMethod, setPaymentMethod] = useState("");
         kInput === "from" ? setLoading(true) : setToLoad(true);
         setSuggestions([]);
         const place = {
-            api_key: process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
-            input: input.trim()
+            placeName: input.trim(),
+            api_key: process.env.GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
         };
         try {
-            const response = await apiClient('GET','https://api.olamaps.io/places/v1/autocomplete', place, null, false, true);
-            const data = await response;
-            if (!data?.status === 'ok') throw new Error(data?.message || "Failed to fetch");
-            setSuggestions(data.predictions || []);
+            const data = await apiClient('POST','/place/search-place', place, null, false, false);
+            if (!data?.success) throw new Error(data?.message || "Failed to fetch");
+            
+            // Normalize backend response to match UI expectations (description, geometry.location)
+            let rawData = data?.data || [];
+            let suggestionsArray = Array.isArray(rawData) ? rawData : [rawData];
+            const mappedSuggestions = suggestionsArray.map(item => ({
+                description: item?.place || item?.name,
+                geometry: { location: { lat: item?.lat, lng: item?.long || item?.lng } }
+            })).filter(item => item.description);
+            
+            setSuggestions(mappedSuggestions);
         } catch (err) {
             console.error("Error fetching autocomplete suggestions:", err.message);
         } finally {
@@ -411,7 +448,7 @@ const [paymentMethod, setPaymentMethod] = useState("");
                 is_local: response?.data?.is_local || false,
                 rideStateName: response?.sourceState?.state,
                 estKm: response?.data?.distanceInKm,
-                collected_by_driver: parseFloat(currentCab.estimated_fare || 0) - parseFloat(((rideData?.status === 'pending' || rideData?.status === "processing")? currentCab?.advanceToBe: rideData?.price_details_json?.advance_amount) || 0) - parseFloat(userDetails?.discount || 0),
+                collected_by_driver: parseFloat(currentCab.estimated_fare || 0) - parseFloat(((rideData?.status === 'pending' || rideData?.status === "processing")? currentCab?.advanceToBe: (rideData?.price_details_json?.advance_amount || rideData?.price_details_json?.advance_to_be || rideData?.price_details_json?.advance_amt)) || 0) - parseFloat(userDetails?.discount || 0),
                 estimatedFare: currentCab?.estimated_fare, advanceAmount: currentCab?.advanceToBe, reqTime: formatTime(response?.data?.durationInMin)}))
             }
         } catch (error) {
@@ -477,9 +514,9 @@ const [paymentMethod, setPaymentMethod] = useState("");
             price_details_json: {
                 ...rideData?.price_details_json,
                 final_fare: userDetails?.estimatedFare,
-                collected_by_driver: parseFloat(userDetails?.estimatedFare || 0) - parseFloat(((rideData?.status === 'pending' || rideData?.status === "processing")? userDetails?.advanceAmount: rideData?.price_details_json?.advance_amount) || 0) - parseFloat(userDetails?.discount || 0), 
+                collected_by_driver: parseFloat(userDetails?.estimatedFare || 0) - parseFloat(((rideData?.status === 'pending' || rideData?.status === "processing")? userDetails?.advanceAmount: (rideData?.price_details_json?.advance_amount || rideData?.price_details_json?.advance_to_be || rideData?.price_details_json?.advance_amt)) || 0) - parseFloat(userDetails?.discount || 0), 
                 estimated_km: userDetails?.estKm,
-                advance_amount: (rideData?.status === 'pending' || rideData?.status === "processing")? userDetails?.advanceAmount: rideData?.price_details_json?.advance_amount,
+                advance_amount: (rideData?.status === 'pending' || rideData?.status === "processing")? userDetails?.advanceAmount: (rideData?.price_details_json?.advance_amount || rideData?.price_details_json?.advance_to_be || rideData?.price_details_json?.advance_amt),
                 estimated_fare: userDetails?.estimatedFare,
                 estimated_time: userDetails?.reqTime,
                 toll_charge: (userDetails?.tollCharge && !isNaN(userDetails?.tollCharge))? parseFloat(userDetails?.tollCharge): 0,//rest
@@ -575,11 +612,11 @@ const [paymentMethod, setPaymentMethod] = useState("");
         let payData = {
             urid: rideData?.urid,
             remark: payStatus,
-            remarkDiscription: selectedCabs?.remarks,
-            user_id: String(userType?.id),
-            user_type: userType?.name,
-            amount: String(selectedCabs?.advance),
-            carrier_required: selectedCabs?.carrier,
+            remarkDiscription: selectedCabs?.remarks || '',
+            user_id: String(userType?.id || ''),
+            user_type: userType?.name || '',
+            amount: String(selectedCabs?.advance || 0),
+            carrier_required: selectedCabs?.carrier || 'no',
         }
 
         try {
@@ -587,6 +624,7 @@ const [paymentMethod, setPaymentMethod] = useState("");
             if (response.success) {
                 toast.success(response.message);
                 setShowStatus(response?.data?.data?.status);
+                setCheckUpdate((prev) => !prev);
                 console.log("ride confirm", response);
             } else {
                 toast.error(response.message);
@@ -656,8 +694,9 @@ const proceedToPayment = async () => {
       payData
     );
 
-    if (response?.status) {
+    if (response?.status || response?.success) {
       toast.success(response.message);
+      setCheckUpdate((prev) => !prev);
     } else {
       toast.error(response.message);
     }
@@ -701,9 +740,10 @@ const proceedToPayment = async () => {
             payData
         );
 
-        if (response?.status) {
+        if (response?.status || response?.success) {
             toast.success(response.message);
             setShowPaymentModal(false);
+            setCheckUpdate((prev) => !prev);
         } else {
             toast.error(response.message);
         }
@@ -731,6 +771,7 @@ const proceedToPayment = async () => {
                 toast.success(response.message);
                 setRemarkResponse(response?.data);
                 setShowStatus(response?.data?.activity_status);
+                setCheckUpdate((prev) => !prev);
             } else {
                 toast.error(response.message)
             }
@@ -739,21 +780,27 @@ const proceedToPayment = async () => {
         }
     }
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     // CALLING APIs ADD_REMARK, CONFRIM_RIDE, CANCEL_REQUEST AND PROCEED TO PAYMENT
     const handleModalSubmit = async () => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
             if (modalAction === 'confirm_ride') {
-                payStatus === 'processing' ? proceedToPayment() : confirmRide();
+                payStatus === 'processing' ? await proceedToPayment() : await confirmRide();
             } else if (modalAction === 'add_remarks') {
-                addRemarks(selectedRemarksTemplate, showStatus ? showStatus : rideData?.status);
+                await addRemarks(selectedRemarksTemplate, showStatus ? showStatus : rideData?.status);
             } else if (modalAction === 'cancel_request') {
-                addRemarks(cancelTemplate, 'cancelled');
+                await addRemarks(cancelTemplate, 'cancelled');
             } else if (modalAction === 'whatsapp_chat') {
 
             }
             setIsModalOpen(false);
         } catch (err) {
             console.error("Modal submit failed", err);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -890,7 +937,7 @@ const proceedToPayment = async () => {
                 <span className="flex items-center gap-1">
                   <span className="h-2 w-2 bg-green-600 rounded-full"></span>
                   <span className="text-[12px] text-gray-400 dark:text-gray-300">
-                    Pickup Location
+                    Pickup Location {rideData?.near_ct_id && cityMap[rideData.near_ct_id] ? <span className="text-blue-500 font-medium">({cityMap[rideData.near_ct_id]})</span> : ''}
                   </span>
                 </span>
               </label>
@@ -977,7 +1024,7 @@ const proceedToPayment = async () => {
                 <span className="flex items-center gap-1">
                   <span className="h-2 w-2 bg-red-600 rounded-full"></span>
                   <span className="text-[12px] text-gray-400 dark:text-gray-300">
-                    Drop Location
+                    Drop Location {rideData?.near_ctd_id && cityMap[rideData.near_ctd_id] ? <span className="text-blue-500 font-medium">({cityMap[rideData.near_ctd_id]})</span> : ''}
                   </span>
                 </span>
               </label>
@@ -1400,6 +1447,7 @@ const proceedToPayment = async () => {
           onSubmit={handleModalSubmit}
           modalAction={modalAction}
           payStatus={payStatus}
+          isSubmitting={isSubmitting}
         >
           {/* CONFIRM RIDE MODAL  */}
           {modalAction === "confirm_ride" && (

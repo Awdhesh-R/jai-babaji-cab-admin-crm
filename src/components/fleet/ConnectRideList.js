@@ -247,7 +247,7 @@ const ConnectRideList = () => {
               <div className=" text-gray-700">
                 <div className='text-sm text-gray-900'>Operator Payout: ₹{ride?.price_details_json?.operator_payout || "-"}</div>
                 </div>
-              <div className="text-sm text-gray-500">jaiBabajiCab: ₹ <span className='text-green-500'>{(ride?.price_details_json?.jaibabajicab_fee || ride?.price_details_json?.jaibabajicab_fee) || "-"}</span></div>
+              <div className="text-sm text-gray-500">rodYaan: ₹ <span className='text-green-500'>{(ride?.price_details_json?.rodYaan_fee || ride?.price_details_json?.rodYaan_fee) || "-"}</span></div>
             </div> */}
 
             {/* Action Buttons */}
@@ -376,7 +376,7 @@ const ConnectRideList = () => {
                           <div className=" text-gray-700">
                             <div className='text-sm text-gray-900'>Operator Payout: ₹{ride?.price_details_json?.operator_payout || "-"}</div>
                           </div>
-                          <div className="text-sm text-gray-500">jaiBabajiCab: ₹ <span className='text-green-500'>{(ride?.price_details_json?.jaibabajicab_fee || ride?.price_details_json?.jaibabajicab_fee) || "-"}</span></div>
+                          <div className="text-sm text-gray-500">rodYaan: ₹ <span className='text-green-500'>{(ride?.price_details_json?.rodYaan_fee || ride?.price_details_json?.rodYaan_fee) || "-"}</span></div>
                         </div> */}
 
                         {/* Action Buttons */}

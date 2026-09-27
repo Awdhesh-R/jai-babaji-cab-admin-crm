@@ -95,7 +95,7 @@ const AllOperatorUpcoming = ({ type = "op_upcoming", isChild = false }) => {
                 <div className="flex items-center">
                     <div className="w-1 h-6 rounded-md bg-green-700 mr-3"></div>
                     <h2 className="text-[16px] md:text-2xl font-bold bg-gradient-to-r from-[#15803D] to-[#81CA18] bg-clip-text text-transparent">
-                        jaiBabajiCab Ride List
+                        rodYaan Ride List
                     </h2>
                 </div>
 

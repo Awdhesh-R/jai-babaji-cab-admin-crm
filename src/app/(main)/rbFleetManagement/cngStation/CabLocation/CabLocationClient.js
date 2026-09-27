@@ -769,7 +769,7 @@ if (phone !== "") {
         if (!mounted) return;
         const olaMaps = new OlaMaps({
           apiKey: [
-            process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
+            process.env.OLA_KEY || "YM0VARVFQ9OS7T3ANBHY",
           ],
           style:
             "https://api.olamaps.io/tiles/vector/v1/styles/default-light/style.json",

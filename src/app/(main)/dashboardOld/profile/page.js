@@ -1,7 +1,7 @@
 import UserInfoCard from '@/components/user-profile/UserInfoCard';
 
 export const metadata = {
-  title: "Customer Profile | jaiBabajiCab - Revolution is on the way",
+  title: "Customer Profile | rodYaan - Revolution is on the way",
   description: "This is Customer Profile Page",
 };
 

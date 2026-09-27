@@ -14,12 +14,12 @@ const RideList = () => {
     const [driver_id, setSelectedDriverId] = useState();
     const [rideList, setRideList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [driver_source, setDriverSource] = useState("jaiBabajiCab")
+    const [driver_source, setDriverSource] = useState("rodYaan")
     const [fleetFilter, setFleetFilter] = useState("");
     const [show, setShow] = useState(false);
     const [nameSearch, setNameSearch] = useState("");
     const [totalRecords, setTotalRecords] = useState(0);
-    const [jaiBabajiCabDrivers, setjaiBabajiCabDrivers] = useState([]);
+    const [rodYaanDrivers, setrodYaanDrivers] = useState([]);
     const [marketDrivers, setMarketDrivers] = useState([]);
 
     const lastCardRef = useCallback(
@@ -37,16 +37,16 @@ const RideList = () => {
         [hasMore]
     );
 
-    // Fetch jaiBabajiCab drivers
-    const fetchjaiBabajiCabDrivers = useCallback(async () => {
+    // Fetch rodYaan drivers
+    const fetchrodYaanDrivers = useCallback(async () => {
         setLoading(true);
         try {
             const response = await apiClient("GET", "/rb_drivers/getAllDriver", {});
             if (response.status || response.success) {
-                setjaiBabajiCabDrivers(response.data.data || response.data || []);
+                setrodYaanDrivers(response.data.data || response.data || []);
             }
         } catch (error) {
-            console.error("Error fetching jaiBabajiCab drivers:", error);
+            console.error("Error fetching rodYaan drivers:", error);
         } finally {
             setLoading(false);
         }
@@ -74,17 +74,17 @@ const RideList = () => {
       // When show popup is true, fetch both drivers
       useEffect(() => {
         if (show) {
-          fetchjaiBabajiCabDrivers();
+          fetchrodYaanDrivers();
           fetchMarketDrivers();
         }
-      }, [show, fetchjaiBabajiCabDrivers, fetchMarketDrivers]);
+      }, [show, fetchrodYaanDrivers, fetchMarketDrivers]);
     
-      // Map jaiBabajiCab drivers to uniform format
-      const mappedjaiBabajiCab = jaiBabajiCabDrivers.map((d) => ({
+      // Map rodYaan drivers to uniform format
+      const mappedrodYaan = rodYaanDrivers.map((d) => ({
         driverId: d.id,
         driverName: d.driverName,
         driverMobile: d.driverMobile || "N/A",
-        fleetType: "jaiBabajiCab",
+        fleetType: "rodYaan",
       }));
     
       // Map Market drivers to uniform format
@@ -97,11 +97,11 @@ const RideList = () => {
     
       // Combine based on fleet filter
       const combinedDrivers =
-        driver_source === "jaiBabajiCab"
-          ? mappedjaiBabajiCab
+        driver_source === "rodYaan"
+          ? mappedrodYaan
           : driver_source === "Operator"
           ? mappedMarket
-          : [...mappedjaiBabajiCab, ...mappedMarket];
+          : [...mappedrodYaan, ...mappedMarket];
     
       // Filter combined drivers by search fields
       const displayData = combinedDrivers.filter(
@@ -189,11 +189,11 @@ const RideList = () => {
                             All
                         </button>
                         <button
-                            onClick={() => setFleetFilter("jaiBabajiCab")}
-                            className={toggleBtnClass(fleetFilter, "jaiBabajiCab")}
+                            onClick={() => setFleetFilter("rodYaan")}
+                            className={toggleBtnClass(fleetFilter, "rodYaan")}
                             aria-label="Filter Personal Fleet Type"
                         >
-                            jaiBabajiCab
+                            rodYaan
                         </button>
                         <button
                             onClick={() => setFleetFilter("Operator")}
@@ -239,11 +239,11 @@ const RideList = () => {
                                         <div className="flex justify-center my-2 sm:my-0">
                                             <div className="inline-flex space-x-2 sm:space-x-3 items-center w-[280px]">
                                                 <button
-                                                    onClick={() => setDriverSource("jaiBabajiCab")}
-                                                    className={toggleBtnClass(driver_source, "jaiBabajiCab")}
+                                                    onClick={() => setDriverSource("rodYaan")}
+                                                    className={toggleBtnClass(driver_source, "rodYaan")}
                                                     aria-label="Filter Personal Fleet Type"
                                                 >
-                                                    jaiBabajiCab
+                                                    rodYaan
                                                 </button>
                                                 <button
                                                     onClick={() => setDriverSource("Operator")}

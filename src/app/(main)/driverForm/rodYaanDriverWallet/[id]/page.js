@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import AllRideTable from "@/components/cards/AllRideTable";
 import { collectCash } from "@/services/rideManagement";
 
-const JaiBabajiCabDriverWalletPage = () => {
+const RodYaanDriverWalletPage = () => {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState(0);
   const [selectedRides, setSelectedRides] = React.useState(new Set());
@@ -42,7 +42,7 @@ const JaiBabajiCabDriverWalletPage = () => {
   const [ridePage, CurrentRidePage] = useState(1);
   const [modalFor, setModalFor] = useState("single"); // 'all' or 'single'
   const [driverDetails, setDriverDetails] = useState();
-  const [jaibabajicabCollectionAmount, setjaiBabajiCabCollectionAmount] = useState(0);
+  const [rodYaanCollectionAmount, setrodYaanCollectionAmount] = useState(0);
   const [earnedAmount, setEarnedAmount] = useState(0);
   const [walletPoints, setWalletPoints] = useState(0);
   const [totalRides, setTotalRide] = useState();
@@ -63,8 +63,8 @@ const JaiBabajiCabDriverWalletPage = () => {
   };
   const walletCards = [
     {
-      label: "jaiBabajiCab colletions",
-      amount: () => getAmount(jaibabajicabCollectionAmount),
+      label: "rodYaan colletions",
+      amount: () => getAmount(rodYaanCollectionAmount),
       subtext: "Total Collections",
       icon: <BsWallet className="w-5 h-5" />,
       bgColor: "bg-[#FFC667]",
@@ -73,7 +73,7 @@ const JaiBabajiCabDriverWalletPage = () => {
       image: "/images/walletPoints.png",
     },
     {
-      label: "Earned from jaiBabajiCab",
+      label: "Earned from rodYaan",
       amount: () => getAmount(earnedAmount),
       subtext: "Total Earnings",
       icon: <FaArrowTrendUp className="w-5 h-5" />,
@@ -141,9 +141,9 @@ const JaiBabajiCabDriverWalletPage = () => {
         );
         let tempArr = [];
         if (response.status && response?.data) {
-          setjaiBabajiCabCollectionAmount(response?.data?.jaibabajicab_collection);
+          setrodYaanCollectionAmount(response?.data?.rodYaan_collection);
           setWalletPoints(response?.data?.wallet_points);
-          setEarnedAmount(response?.data?.earned_from_jaibabajicab);
+          setEarnedAmount(response?.data?.earned_from_rodYaan);
           setTotalRide(response?.data?.total_collections_rides);
           setDriverDetails({
             ...response?.data?.driver_details,
@@ -378,7 +378,7 @@ const JaiBabajiCabDriverWalletPage = () => {
       try {
         const params = {
           page: pageNo,
-          cab_source: "jaiBabajiCab",
+          cab_source: "rodYaan",
           driver_id: id,
           limit: 100,
         };
@@ -550,12 +550,20 @@ const JaiBabajiCabDriverWalletPage = () => {
 
   const handleOfflinePayment = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"))?.user;
+      const parsedData = JSON.parse(localStorage.getItem("user"));
+      const user = parsedData?.user || parsedData;
+      const adminMobile = user?.mobile_no || user?.mobile || "";
+
+      if (!adminMobile) {
+        toast.error("Admin mobile number not found. Please log in with OTP or update your profile.");
+        return;
+      }
+
       const response = await apiClient(
         "POST",
-        "/rbac/login",
+        "/rbac/send-otp-rodyaan",
         {
-          mobile_no: `${user?.mobile_no}`, //otp to admin mobile
+          mobile_no: adminMobile, //otp to admin mobile
         }
       );
       if (response?.status || response?.success) {
@@ -571,9 +579,10 @@ const JaiBabajiCabDriverWalletPage = () => {
 
   const verifyOtp = async (otp, invoiceType) => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"))?.user;
-      const response = await apiClient("POST", "/rbac/login", {
-        mobile_no: user?.mobile_no,
+      const parsedData = JSON.parse(localStorage.getItem("user"));
+      const user = parsedData?.user || parsedData;
+      const response = await apiClient("POST", "/rbac/verify-otp-rod-yaan", {
+        mobile_no: user?.mobile_no || user?.mobile || "",
         otp: otp,
       });
       if (response?.status || response?.success) {
@@ -714,11 +723,11 @@ const JaiBabajiCabDriverWalletPage = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-[10px] md:text-[18px] bg-gradient-to-r from-[#2563EB] to-[#9333EA] bg-clip-text text-transparent">
-              jaiBabajiCab Driver Wallet
+              rodYaan Driver Wallet
             </span>
             <span className="text-[6px] md:text-[9px] text-gray-500 ">
               Please select one of the following driver plans to begin earning
-              with jaiBabajiCab
+              with rodYaan
             </span>
           </div>
         </div>
@@ -727,7 +736,7 @@ const JaiBabajiCabDriverWalletPage = () => {
       {/* new change hererrereer */}
       <div
         className="rounded-lg border p-5 bg-cover"
-        style={{ backgroundImage: "url('/images/jaiBabajiCabDriverWallet1.png')" }}
+        style={{ backgroundImage: "url('/images/rodYaanDriverWallet1.png')" }}
       >
         <span className="text-gray-700 text-[16px] font-bold">
           Wallet Overview
@@ -823,7 +832,7 @@ const JaiBabajiCabDriverWalletPage = () => {
                     </p>
                   </div>
                 </div>
-                {card?.label === "jaiBabajiCab Commission" && (
+                {card?.label === "rodYaan Commission" && (
                   <div className="my-4 sm:my-0">
                     <Image
                       src="/images/money.svg"
@@ -1452,4 +1461,4 @@ const JaiBabajiCabDriverWalletPage = () => {
   );
 };
 
-export default JaiBabajiCabDriverWalletPage;
+export default RodYaanDriverWalletPage;

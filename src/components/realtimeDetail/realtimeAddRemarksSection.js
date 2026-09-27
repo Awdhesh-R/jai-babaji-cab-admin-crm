@@ -306,8 +306,10 @@ const AddRemarksSection = ({
     try {
       setLoadingRideActivity(true);
       const res = await apiClient(
-        "GET",
-        `/ride_management/rideActivityHistoryList/${urid.toString()}`
+        "POST",
+        `/ride_management/rideActivityHistory`,
+        JSON.stringify({ urid: urid.toString() }),
+        true
       );
       if (res.success || res.status) {
         setRideActivityList(res.data);

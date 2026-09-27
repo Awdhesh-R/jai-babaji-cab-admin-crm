@@ -69,7 +69,12 @@ const Page = () => {
             setSameAsMobile(driver.driverMobile == driver.driverWaMobile);
             setAlternateNumer(driver.driverAlternateNumber || "");
             if (driver.driverImage) {
-                setImageUrl(driver.driverImage);
+                if (driver.driverImage.startsWith('http') || driver.driverImage.startsWith('data:')) {
+                    setImageUrl(driver.driverImage);
+                } else {
+                    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5001";
+                    setImageUrl(`${baseUrl.replace(/\/$/, "")}/${driver.driverImage.replace(/^\//, "")}`);
+                }
             }
         }
     }, [driver]);
@@ -386,7 +391,7 @@ const Page = () => {
                             <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-300 transition">
                                 {frontImage ? (
                                     <Image
-                                        src={frontImage}
+                                        src={frontImage instanceof File ? URL.createObjectURL(frontImage) : frontImage}
                                         alt="Front Preview"
                                         width={300}
                                         height={200}
@@ -415,7 +420,7 @@ const Page = () => {
                             <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-300 transition">
                                 {backImage ? (
                                     <Image
-                                        src={backImage}
+                                        src={backImage instanceof File ? URL.createObjectURL(backImage) : backImage}
                                         alt="Back Preview"
                                         width={300}
                                         height={200}
@@ -486,7 +491,7 @@ const Page = () => {
                             <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-300 transition">
                                 {dlFrontImage ? (
                                     <Image
-                                        src={dlFrontImage}
+                                        src={dlFrontImage instanceof File ? URL.createObjectURL(dlFrontImage) : dlFrontImage}
                                         alt="Licence Front"
                                         width={300}
                                         height={200}
@@ -515,7 +520,7 @@ const Page = () => {
                             <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-300 transition">
                                 {dlBackImage ? (
                                     <Image
-                                        src=""
+                                        src={dlBackImage instanceof File ? URL.createObjectURL(dlBackImage) : dlBackImage}
                                         alt="Driver"
                                         width={150}
                                         height={150}

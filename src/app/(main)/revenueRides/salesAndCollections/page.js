@@ -22,7 +22,7 @@ function getCollectionTypeClasses(type) {
       return "border-[#15803D33] text-[#15803D]";
     case "user advance":
       return "border-[#84CC1633] text-[#84CC16]";
-    // case "jaibabajicab fee":
+    // case "rodYaan fee":
     //   return "border-blue-400 text-blue-600";
     // case "driver due":
     //   return "border-orange-400 text-orange-600";
@@ -305,7 +305,7 @@ export default function SalesAndCollectionMonitor() {
   const [querry, setQuerry] = useState("");
   const observerRef = useRef();
    const [data, setData] = useState("");
-    const [fleetFilter, setFleetFilter] = useState("jaiBabajiCab");
+    const [fleetFilter, setFleetFilter] = useState("rodYaan");
 
   const filterInvoiceList = invoicesList;
 
@@ -414,19 +414,19 @@ export default function SalesAndCollectionMonitor() {
       //     .includes(searchURID.toLowerCase())
       // );
     
-      const [jaiBabajiCabDrivers, setjaiBabajiCabDrivers] = useState([]);
+      const [rodYaanDrivers, setrodYaanDrivers] = useState([]);
       const [marketDrivers, setMarketDrivers] = useState([]);
     
-      // Fetch jaiBabajiCab drivers
-      const fetchjaiBabajiCabDrivers = useCallback(async () => {
+      // Fetch rodYaan drivers
+      const fetchrodYaanDrivers = useCallback(async () => {
         setLoading(true);
         try {
           const response = await apiClient("GET", "/rb_drivers/getAllDriver", {});
           if (response.status || response.success) {
-            setjaiBabajiCabDrivers(response.data.data || response.data || []);
+            setrodYaanDrivers(response.data.data || response.data || []);
           }
         } catch (error) {
-          console.error("Error fetching jaiBabajiCab drivers:", error);
+          console.error("Error fetching rodYaan drivers:", error);
         } finally {
           setLoading(false);
         }
@@ -454,17 +454,17 @@ export default function SalesAndCollectionMonitor() {
       // When show popup is true, fetch both drivers
       useEffect(() => {
         if (show) {
-          fetchjaiBabajiCabDrivers();
+          fetchrodYaanDrivers();
           fetchMarketDrivers();
         }
-      }, [show, fetchjaiBabajiCabDrivers, fetchMarketDrivers]);
+      }, [show, fetchrodYaanDrivers, fetchMarketDrivers]);
     
-      // Map jaiBabajiCab drivers to uniform format
-      const mappedjaiBabajiCab = jaiBabajiCabDrivers.map((d) => ({
+      // Map rodYaan drivers to uniform format
+      const mappedrodYaan = rodYaanDrivers.map((d) => ({
         driverId: d.id,
         driverName: d.driverName,
         driverMobile: d.driverMobile || "N/A",
-        fleetType: "jaiBabajiCab",
+        fleetType: "rodYaan",
       }));
     
       // Map Market drivers to uniform format
@@ -477,11 +477,11 @@ export default function SalesAndCollectionMonitor() {
     
       // Combine based on fleet filter
       const combinedDrivers =
-        fleetFilter === "jaiBabajiCab"
-          ? mappedjaiBabajiCab
+        fleetFilter === "rodYaan"
+          ? mappedrodYaan
           : fleetFilter === "Operator"
           ? mappedMarket
-          : [...mappedjaiBabajiCab, ...mappedMarket];
+          : [...mappedrodYaan, ...mappedMarket];
     
       // Filter combined drivers by search fields
       const displayData = combinedDrivers.filter(
@@ -651,7 +651,7 @@ const summaryData = data ?[
                                 className="border-b last:border-0 cursor-pointer hover:bg-gray-200 transition"
                                 onClick={() =>
                                   router.push(
-                                    "/driverForm/jaiBabajiCabDriverWallet/1"
+                                    "/driverForm/rodYaanDriverWallet/1"
                                   )
                                 }
                               >
@@ -1074,11 +1074,11 @@ const summaryData = data ?[
                                   <div className="flex justify-center my-2 sm:my-0">
                                     <div className="inline-flex space-x-2 sm:space-x-3 items-center w-[280px]">
                                       <button
-                                        onClick={() => setFleetFilter("jaiBabajiCab")}
-                                        className={toggleBtnClass(fleetFilter, "jaiBabajiCab")}
+                                        onClick={() => setFleetFilter("rodYaan")}
+                                        className={toggleBtnClass(fleetFilter, "rodYaan")}
                                         aria-label="Filter Personal Fleet Type"
                                       >
-                                        jaiBabajiCab
+                                        rodYaan
                                       </button>
                                       <button
                                         onClick={() => setFleetFilter("Operator")}

@@ -148,8 +148,10 @@ if (firstRes?.data) {
   const rideActivityHistory = async (ride_urid) => {
     try {
       const response = await apiClient(
-        'GET',
-        `/ride_management/rideActivityHistoryList/${ride_urid}`
+        'POST',
+        `/ride_management/rideActivityHistory`,
+        JSON.stringify({ urid: ride_urid.toString() }),
+        true
       );
       if (response?.status || response?.success) {
         setActivityData(response?.data);

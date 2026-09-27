@@ -88,7 +88,7 @@ export default function LoginForm() {
           Join Thousands of Riders & Drivers that<br></br>
         </span>
         <span className="text-white items-center font-bold text-[28px] ">
-          Trust jaiBabajiCab.<br></br>
+          Trust rodYaan.<br></br>
         </span>
         <div className="flex items-center gap-6 text-white mt-2">
           <span className="flex items-center gap-2">

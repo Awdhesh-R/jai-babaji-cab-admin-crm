@@ -322,7 +322,7 @@ const AddAmountInDriverWallet = ({ onClose }) => {
               <option value="Anu Mishra">Anu Mishra</option>
               <option value="Suraj">Suraj</option>
               <option value="Anshuman">Anshuman</option>
-              <option value="4247 jaiBabajiCab">4247 jaiBabajiCab</option>
+              <option value="4247 rodYaan">4247 rodYaan</option>
             </select>
           </div>
         )}

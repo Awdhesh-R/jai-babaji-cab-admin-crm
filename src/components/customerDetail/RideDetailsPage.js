@@ -125,13 +125,16 @@ const RideDetailsPage = ({
         return "";
     }
     const getTimeInMinutes = (str) => {
+        if (str === undefined || str === null || str === '') return 0;
         const pattern = /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/;
-        if(pattern.test(str)) {
-            const [h, m, s] = str.split(":");
+        if(pattern.test(String(str))) {
+            const [h, m, s] = String(str).split(":");
             const hInm = parseFloat(h)*60;
             const sInm = parseFloat(s)/60;
             const min = hInm + sInm + parseFloat(m);
             return min;
+        } else if (!isNaN(str)) {
+            return parseFloat(str);
         } else {
             return 0;
         }
@@ -139,7 +142,7 @@ const RideDetailsPage = ({
   const handleProceed = () => {
     console.log(refundType, cashAmount, rideDetails?.urid, rideDetails?.user_id)
     if ( refundType==='partial') {
-        if(parseFloat(cashAmount) > parseFloat(rideDetails?.price_details_json?.advance_amount)){ 
+        if(parseFloat(cashAmount) > parseFloat(rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt)){ 
             toast.error('Amount cannot be greater than advance amount');
             return;
         }
@@ -156,7 +159,7 @@ const RideDetailsPage = ({
       const payload = {
         transaction_id : "",
         refund_amount: 0,
-        invoice_amount: rideDetails?.payment_details_json? rideDetails?.payment_details_json?.advance_paid: rideDetails?.price_details_json?.advance_amount,
+        invoice_amount: rideDetails?.payment_details_json? rideDetails?.payment_details_json?.advance_paid: (rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt),
         urid: rideDetails?.urid,
         wallet: false,
       }
@@ -178,7 +181,7 @@ const RideDetailsPage = ({
       const payload = {
         transaction_id: rideDetails?.payment_details_json ? rideDetails?.payment_details_json?.transaction_id : "",
         refund_amount: parseFloat(cashAmount),
-        invoice_amount: rideDetails?.payment_details_json ? parseFloat(rideDetails?.payment_details_json?.advance_paid)-parseFloat(cashAmount) : parseFloat(rideDetails?.price_details_json?.advance_amount) - parseFloat(cashAmount),
+        invoice_amount: rideDetails?.payment_details_json ? parseFloat(rideDetails?.payment_details_json?.advance_paid)-parseFloat(cashAmount) : parseFloat(rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt) - parseFloat(cashAmount),
         urid: rideDetails?.urid,
         wallet: false
       }
@@ -199,7 +202,7 @@ const RideDetailsPage = ({
         const payload = {
           transaction_id: rideDetails?.payment_details_json ? rideDetails?.payment_details_json?.transaction_id : "",
           refund_amount: parseFloat(cashAmount),
-          invoice_amount: rideDetails?.payment_details_json ? parseFloat(rideDetails?.payment_details_json?.advance_paid)-parseFloat(cashAmount) : parseFloat(rideDetails?.price_details_json?.advance_amount) - parseFloat(cashAmount),
+          invoice_amount: rideDetails?.payment_details_json ? parseFloat(rideDetails?.payment_details_json?.advance_paid)-parseFloat(cashAmount) : parseFloat(rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt) - parseFloat(cashAmount),
           urid: rideDetails?.urid,
           wallet: true,
         }
@@ -232,7 +235,10 @@ const RideDetailsPage = ({
   const updateRideDetails = async () => {
     console.log(value);
     const pattern = /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/;
-    if (!value?.extra_time || !pattern.test(value?.extra_time)) {
+    const isHHMMSS = pattern.test(String(value?.extra_time));
+    const isNumber = !isNaN(value?.extra_time) && String(value?.extra_time).trim() !== '';
+
+    if (value?.extra_time === undefined || value?.extra_time === null || (!isHHMMSS && !isNumber)) {
       toast.error("Extra Time Missing Or Incorrect Format!");
       return;
     }
@@ -305,17 +311,17 @@ const RideDetailsPage = ({
   const [cabServiceData, setCabServiceData] = useState({
     cabDetails: {
       cab_id: rideDetails?.cab_details_json?.cab_id ?? "",
-      cab_reg: rideDetails?.cab_details_json?.cab_reg ?? "",
+      cab_reg: rideDetails?.cab_details_json?.cab_reg ?? rideDetails?.cab_details_json?.cab_registration_no ?? rideDetails?.cab_details_json?.cab_number ?? "",
       cab_type: getCabType(rideDetails?.cab_details_json?.cab_type) ?? "",
       cab_model: rideDetails?.cab_details_json?.cab_model ?? "",
       cab_source: rideDetails?.cab_details_json?.cab_source ?? "",
     },
     driverDetails: {
       driver_id: rideDetails?.driver_details_json?.driver_id ?? "",
-      driver_name: rideDetails?.driver_details_json?.drv_name ?? "",
+      driver_name: rideDetails?.driver_details_json?.drv_name ?? rideDetails?.driver_details_json?.name ?? "",
       driver_image: rideDetails?.driver_details_json?.driver_image ?? "",
-      driver_mobile: rideDetails?.driver_details_json?.driver_mobile ?? "",
-      driver_whatsapp: rideDetails?.driver_details_json?.drv_wa_number ?? "",
+      driver_mobile: rideDetails?.driver_details_json?.driver_mobile ?? rideDetails?.driver_details_json?.mobile ?? "",
+      driver_whatsapp: rideDetails?.driver_details_json?.drv_wa_number ?? rideDetails?.driver_details_json?.whatsapp ?? "",
       driver_rating: rideDetails?.driver_details_json?.driver_rating ?? "",
     },
   });
@@ -381,7 +387,7 @@ const RideDetailsPage = ({
       const { OlaMaps } = module;
       const olaMaps = new OlaMaps({
         apiKey: [
-          process.env.OLA_KEY || "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
+          process.env.OLA_KEY || "YM0VARVFQ9OS7T3ANBHY",
         ],
         style:
           "https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard/style.json",
@@ -457,7 +463,7 @@ const RideDetailsPage = ({
               destinations: [...dest].sort().join(),
               api_key:
                 process.env.OLA_KEY ||
-                "OYZHLli2k5i9JrcOqveiL2wG5dxJ0A08blmHWFSa",
+                "YM0VARVFQ9OS7T3ANBHY",
             },
             null,
             false,
@@ -517,7 +523,7 @@ const RideDetailsPage = ({
     const source = cabServiceData?.cabDetails?.cab_source?.toLowerCase();
     try {
       let url = null;
-      if (source === "jaibabajicab") {
+      if (source === "rodYaan") {
         url = `/rb_cabs/rbCabsDetails/${cab_id}`;
         const response = await apiClient("GET", url);
         if (response.status || response.success) {
@@ -527,7 +533,7 @@ const RideDetailsPage = ({
           await handleMapInit(cab, coordinates);
         }
       } else {
-        url = `/fleet/operater-cab-details/${cab_id}`;
+        url = `/one_time_cabs/oneTimeDetails/${cab_id}`;
         const res = await apiClient("GET", url);
         if (res.status && res.success) {
           // const cabArr = res.data;
@@ -783,7 +789,7 @@ const canEditFareSummary =
                   Estimated Fare
                 </p>
                 <p className={`text-xl font-bold text-gray-900`}>
-                  ₹ {rideDetails?.price_details_json?.estimated_fare}
+                  ₹ {rideDetails?.price_details_json?.estimated_fare ?? rideDetails?.price_details_json?.estimated_price ?? 0}
                 </p>
               </div>
               <button
@@ -820,7 +826,7 @@ const canEditFareSummary =
                   Convenience Fee
                 </p>
                 <p className={`text-xl font-bold text-white`}>
-                  ₹ {rideDetails?.price_details_json?.advance_amount ?? 0}
+                  ₹ {rideDetails?.price_details_json?.advance_amount ?? rideDetails?.price_details_json?.advance_to_be ?? rideDetails?.price_details_json?.advance_amt ?? 0}
                 </p>
               </div>
               <div
@@ -841,7 +847,7 @@ const canEditFareSummary =
                   ₹{" "}
                   {rideDetails?.price_details_json?.collected_by_driver === 0
                     ? rideDetails?.price_details_json?.final_fare -
-                      rideDetails?.price_details_json?.advance_amount
+                      (rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt || 0)
                     : rideDetails?.price_details_json?.collected_by_driver}
                   {/* {rideDetails?.is_collected
                                         ? rideDetails?.price_details_json?.final_fare   // If collected
@@ -866,10 +872,10 @@ const canEditFareSummary =
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ml-4 mr-4">
               <div className="p-4 bg-white rounded-md shadow-md border border-gray-200">
                 <p className="text-xs font-semibold text-blue-600 uppercase">
-                  jaiBabajiCab Fee
+                  rodYaan Fee
                 </p>
                 <p className="text-xl font-bold text-gray-900">
-                  ₹ {(rideDetails?.price_details_json?.jaibabajicab_fee || (rideDetails?.price_details_json?.jaibabajicab_fee || rideDetails?.price_details_json?.jaibabajicab_fee)) || 0}
+                  ₹ {(rideDetails?.price_details_json?.rodYaan_fee || (rideDetails?.price_details_json?.rodYaan_fee || rideDetails?.price_details_json?.rodYaan_fee)) || 0}
                 </p>
                 <p className="text-sm text-gray-500">Service Charge</p>
               </div>
@@ -1096,7 +1102,7 @@ const canEditFareSummary =
                   disabled
                     type="number"
                     min="0"
-                    value={rideDetails?.payment_details_json?.advance_paid?? rideDetails?.price_details_json?.advance_amount}
+                    value={rideDetails?.payment_details_json?.advance_paid?? (rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt || 0)}
                     // onChange={(e) => setCashAmount(e.target.value)}
                     placeholder="₹0"
                     className="border rounded px-2 py-1 w-24 text-right"
@@ -1112,7 +1118,7 @@ const canEditFareSummary =
                   <input
                     type="number"
                     min="0"
-                    max={rideDetails?.price_details_json?.advance_amount}
+                    max={rideDetails?.price_details_json?.advance_amount || rideDetails?.price_details_json?.advance_to_be || rideDetails?.price_details_json?.advance_amt || 0}
                     value={cashAmount}
                     onChange={(e) => setCashAmount(e.target.value)}
                     placeholder="₹0"
