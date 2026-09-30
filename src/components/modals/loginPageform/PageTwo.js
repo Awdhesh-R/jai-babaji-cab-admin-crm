@@ -58,9 +58,12 @@ export default function PageTwo() {
 
             if (response.success) {
                 const data = response;
-                const token = data?.token || data?.data?.token;
+                const token = data?.adminAuthToken || data?.data?.adminAuthToken || data?.token || data?.data?.token;
                 const userData = data?.data?.user || data?.data || data?.user;
                 
+                // DEBUG: Saving raw response so we can see what the backend actually returned!
+                // localStorage.setItem('debug_raw_response', JSON.stringify(response));
+
                 dispatch(setPage("pageFour"));
                 
                 if (token) {
