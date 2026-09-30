@@ -76,12 +76,14 @@ export const startTrip = async (urid, start_km) => {
 
 // End trip
 export const endTrip = async (urid, end_km, source) => {
+    if (source === "RodBez" || source === "rodbez") source = "RodYaan";
     const payData = { urid, end_km, source };
     return apiClient("POST", "/ride_management/trip-end", JSON.stringify(payData), true);
 };
 
 // Collect cash
 export const collectCash = async (urid, source) => {
+    if (source === "RodBez" || source === "rodbez") source = "RodYaan";
     const payData = { source};
     return apiClient("PUT", `/ride_management/cash-collected-by-driver/${urid}`,JSON.stringify(payData), true);
 };
