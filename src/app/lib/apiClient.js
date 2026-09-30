@@ -74,7 +74,7 @@ export const apiClient = async (
     if (
       typeof window !== "undefined" &&
       !isOlaAPI &&
-      (status === 401 || (status === 403 && endpoint !== "/search_service" && endpoint !== "/ride_management/add-admin-booking"))
+      (status === 401 || (status === 403 && endpoint !== "/search_service" && endpoint !== "/ride_management/add-admin-booking" && !endpoint.includes("/getUpdatedEstimatedFare")))
     ) {
       localStorage.clear();
       Cookies.remove("adminAuthToken");
