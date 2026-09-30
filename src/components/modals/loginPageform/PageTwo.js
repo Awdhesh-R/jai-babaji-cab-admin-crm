@@ -58,10 +58,21 @@ export default function PageTwo() {
 
             if (response.success) {
                 const data = response;
+                const token = data?.token || data?.data?.token;
+                const userData = data?.data?.user || data?.data || data?.user;
+                
                 dispatch(setPage("pageFour"));
-                localStorage.setItem('token', data.data.token);
-                localStorage.setItem('user', JSON.stringify(data.data));
-                Cookies.set('adminAuthToken', data.data.token, { expires: 7, path: '/' });
+                
+                if (token) {
+                    localStorage.setItem('token', token);
+                    Cookies.set('adminAuthToken', token, { expires: 7, path: '/' });
+                } else {
+                    console.error("Login successful but token is missing from response!");
+                }
+                
+                if (userData) {
+                    localStorage.setItem('user', JSON.stringify(userData));
+                }
                 
                 setTimeout(() => {
                     window.location.href = '/dashboard';
