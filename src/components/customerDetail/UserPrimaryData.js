@@ -682,7 +682,7 @@ const proceedToPayment = async () => {
     user_id: rideData?.user_id,
     amount: selectedCabs?.advance,
     booking_id: rideData?.urid,
-    mobile_no: rideData?.user_details_json?.book_contact,
+    mobile_no: rideData?.user_details_json?.c_wa_number || rideData?.user_details_json?.book_contact,
     remark: selectedCabs?.remarks,
     booking_type: rideData?.booking_type
   };
@@ -727,7 +727,7 @@ const proceedToPayment = async () => {
         user_id: rideData?.user_id,
         amount: selectedCabs?.advance,
         booking_id: rideData?.urid,
-        mobile_no: rideData?.user_details_json?.book_contact,
+        mobile_no: rideData?.user_details_json?.c_wa_number || rideData?.user_details_json?.book_contact,
         remark: selectedCabs?.remarks,
         booking_type: rideData?.booking_type,
          gateway: paymentMethod
