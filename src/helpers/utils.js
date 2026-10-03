@@ -42,6 +42,7 @@ export const calculateArrivalTime = (bookingTime, estimated) => {
 
 export function getCabType(value) {
     switch (Number(value)) {
+        case 0: return "mini";
         case 1: return "mini";
         case 2: return "sedan";
         case 3: return "suv";
