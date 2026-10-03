@@ -77,8 +77,8 @@ export const apiClient = async (
       (status === 401 || (status === 403 && endpoint !== "/search_service" && endpoint !== "/ride_management/add-admin-booking" && !endpoint.includes("/getUpdatedEstimatedFare")))
     ) {
       localStorage.clear();
-      Cookies.remove("adminAuthToken");
-      window.location.reload();
+      Cookies.remove("adminAuthToken", { path: '/' });
+      window.location.href = "/auth/signin";
     }
     return {
       success: false,
