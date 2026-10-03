@@ -208,7 +208,13 @@ const handleProbableCab = async (cab) => {
     driver_image: cab?.driver_image || cab?.driverImage || "",
     cab_model: cab?.cab_model || "",
     cab_source: cab?.cab_source || cab?.latestBooking?.cab_details_json?.cab_source || "RY",
-    cab_type: cab?.cab_name?.toLowerCase() || cab?.cab_type || cab?.cab_type_id || "",
+    cab_type: (() => {
+      const t = String(cab?.cab_name?.toLowerCase() || cab?.cab_type || cab?.cab_type_id || "").toLowerCase();
+      if (t === "0" || t === "1" || t === "mini") return "mini";
+      if (t === "2" || t === "sedan") return "sedan";
+      if (t === "3" || t === "suv") return "suv";
+      return t;
+    })(),
     fleet_rate_per_km:
       cab?.fleet_rate_per_km || cab?.latestBooking?.fleet_rate_per_km || "",
 
