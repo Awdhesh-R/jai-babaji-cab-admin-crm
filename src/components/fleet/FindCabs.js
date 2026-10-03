@@ -208,7 +208,7 @@ const handleProbableCab = async (cab) => {
     driver_image: cab?.driver_image || cab?.driverImage || "",
     cab_model: cab?.cab_model || "",
     cab_source: cab?.cab_source || cab?.latestBooking?.cab_details_json?.cab_source || "RY",
-    cab_type: cab?.cab_name?.toLowerCase() || cab?.cab_type || "",
+    cab_type: cab?.cab_name?.toLowerCase() || cab?.cab_type || cab?.cab_type_id || "",
     fleet_rate_per_km:
       cab?.fleet_rate_per_km || cab?.latestBooking?.fleet_rate_per_km || "",
 

@@ -41,13 +41,13 @@ export const calculateArrivalTime = (bookingTime, estimated) => {
 };
 
 export function getCabType(value) {
-    if (typeof value === "string") return value;
     switch (Number(value)) {
         case 1: return "mini";
         case 2: return "sedan";
         case 3: return "suv";
-        default: return "unknown";
     }
+    if (typeof value === "string") return value;
+    return "unknown";
 }
 
 export const customFormatAmount = (val) => {

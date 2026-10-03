@@ -704,8 +704,10 @@ const CabServiceDetails = ({
   const safeImage = (img) => {
   if (!img) return "/images/driverplaceholderimg.png";
   if (img.startsWith("http")) return img;
-  if (img.startsWith("/")) return img;
-  return `/${img}`;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5001/";
+  const base = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+  const path = img.startsWith("/") ? img : `/${img}`;
+  return `${base}${path}`;
 };
 
 
@@ -857,6 +859,7 @@ const CabServiceDetails = ({
   width={60}
   height={60}
   className="rounded-full object-cover border-2 border-blue-500"
+  onError={(e) => { e.target.srcset = ""; e.target.src = "/images/driverplaceholderimg.png"; }}
 />
 
                   </div>

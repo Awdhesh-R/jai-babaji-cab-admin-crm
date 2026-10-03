@@ -312,7 +312,7 @@ const RideDetailsPage = ({
     cabDetails: {
       cab_id: rideDetails?.cab_details_json?.cab_id ?? "",
       cab_reg: rideDetails?.cab_details_json?.cab_reg ?? rideDetails?.cab_details_json?.cab_registration_no ?? rideDetails?.cab_details_json?.cab_number ?? "",
-      cab_type: getCabType(rideDetails?.cab_details_json?.cab_type) ?? "",
+      cab_type: getCabType(rideDetails?.cab_details_json?.cab_type ?? rideDetails?.cab_details_json?.cab_type_id) ?? "",
       cab_model: rideDetails?.cab_details_json?.cab_model ?? "",
       cab_source: rideDetails?.cab_details_json?.cab_source ?? "",
     },

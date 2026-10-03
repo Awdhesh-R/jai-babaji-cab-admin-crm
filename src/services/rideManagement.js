@@ -13,7 +13,7 @@ export const probableCab = async (cabData, driverData, rideDetails, changeReason
         cab_id: cabData?.cab_id ?? "",
         cab_model: cabData?.cab_model ?? "",
         cab_source: cabData?.cab_source ?? "",
-        cab_type: getCabType(cabData?.cab_type),
+        cab_type: getCabType(cabData?.cab_type ?? cabData?.cab_type_id),
         fleet_rate_per_km: cabData?.cab_source === "Operator"? cabData?.fleet_rate_per_km: "",
         fleet_fixed_rate: cabData?.cab_source === "Operator"? cabData?.fleet_fixed_rate: "",
         ...(isProbabled && { reason: changeReason }),

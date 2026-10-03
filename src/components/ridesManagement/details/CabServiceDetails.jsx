@@ -253,7 +253,7 @@ const CabServiceDetails = ({
         ...prev.cabDetails,
         cab_id: cab?.id,
         cab_reg: cab?.cab_reg ?? "",
-        cab_type: getCabType(cab?.cab_type),
+        cab_type: getCabType(cab?.cab_type ?? cab?.cab_type_id),
         cab_model: cab?.cab_model ?? "",
         cab_source: cab?.source ?? cab?.cab_source ?? "",
       },
@@ -702,8 +702,10 @@ const CabServiceDetails = ({
   const safeImage = (img) => {
   if (!img) return "/images/driverplaceholderimg.png";
   if (img.startsWith("http")) return img;
-  if (img.startsWith("/")) return img;
-  return `/${img}`;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5001/";
+  const base = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+  const path = img.startsWith("/") ? img : `/${img}`;
+  return `${base}${path}`;
 };
 
 
@@ -855,6 +857,7 @@ const CabServiceDetails = ({
   width={60}
   height={60}
   className="rounded-full object-cover border-2 border-blue-500"
+  onError={(e) => { e.target.srcset = ""; e.target.src = "/images/driverplaceholderimg.png"; }}
 />
 
                   </div>
@@ -916,7 +919,7 @@ const CabServiceDetails = ({
                       width={200}
                       height={100}
                       className="object-contain"
-                      onError={(e) => { e.target.onerror = null; e.target.src = '/images/car.png'; }}
+                      onError={(e) => { e.target.onerror = null; e.target.src = '/images/1.png'; }}
                     />
                   </div>
                   <div className="flex  flex-col justify-between px-4 py-2">
